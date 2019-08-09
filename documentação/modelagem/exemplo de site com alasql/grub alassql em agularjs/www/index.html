@@ -9,10 +9,23 @@
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="../src/controller.js"></script>
     <script  src="../src/factory.js"></script>
+    <script src="../src/http_envio.js"></script>
 </head>
 <body >
-    <input type="submit" ng-click="listar()" value="listar"/>
-    <input type="submit" value="insert" ng-click="insert()"/>
-    <span id="texto"></span>
+    <input type="text" ng-model="nome" />
+    <select  ng-model="chamada">
+        <option value="presente">presente</option>
+        <option value="falta">falta</option>
+    </select>
+    <label>Turmas</label>
+    <select ng-model="tipo_turma">
+        <option></option>
+        <option>
+                        <option value="Primeira_turma_da_primeira_modulo" >Primeiro horario da primeira turma </option>
+                        <option value="Segunda_turma_da_primeira_modulo">Segunda horario da primeira turma</option>
+                        <option value="Primeira_turma_da_sesgunda_modulo">Primeiro horario da segunda turma</option>
+        </option>
+    </select>
+    <input type="submit" value="insert" ng-click="insert(nome,chamada,tipo_turma)"/>
 </body>
 </html>

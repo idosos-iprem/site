@@ -1,15 +1,12 @@
 class alasqlprograma{
     constructor(){
         alasql("create database if not exists exemplo")
-       alasql("Create table if not exists teste1(number id ,string nome, number idade);");
+       alasql("Create table if not exists teste2(number id ,string nome, string chamada,string nome_turma);");
     }
-    listar_tabela(){
-        var lista = alasql("select * from teste1");
-       console.log(lista);
-    }
-    
-    insert(){
-       var a = alasql("insert into teste1 values(1,'kevin',12)");
+    insert(nome,chamada, nome_turmas){
+        const id  = 1;
+        var insert = "insert into teste2 values("+id+","+'"'+nome+'"'+","+'"'+chamada+'"'+","+'"'+nome_turmas+'"'+")";
+       var a = alasql(insert);
        console.log(a);
     }
     
@@ -17,19 +14,12 @@ class alasqlprograma{
 var servico = angular.module("servico",[])
 servico.factory("servicos",function(){
     var alasql = new alasqlprograma();
-    function listar_tudo(){
-        alasql.listar_tabela();
+    function insert(nome,chamada,modulo_turmas){
+        alasql.insert(nome,chamada,modulo_turmas);
     }
-    function insert(){
-        alasql.insert();
-    }
-   
     return{
-        select:function(){
-            listar_tudo();
-        },
-        adiconar:function(){
-                insert();
+        adiconar:function(nome,chamada, modulo_turmas){
+                insert(nome,chamada,modulo_turmas);
         }
     }
 })
