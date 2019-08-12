@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="grub"  ng-controller="site"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.js"></script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+    <script src="../src/controller.js"></script>
+    <script  src="../src/chamada/factory.js"></script>
+    <script src="../src/chamada/http_envio.js"></script>
+</head>
+<body >
+    <input type="text" ng-model="nome" />
+    <select  ng-model="chamada">
+        <option value="presente">presente</option>
+        <option value="falta">falta</option>
+    </select>
+    <label>Turmas</label>
+    <select ng-model="tipo_turma">
+        <option></option>
+        <option>
+                        <option value="Primeira_turma_da_primeira_modulo" >Primeiro horario da primeira turma </option>
+                        <option value="Segunda_turma_da_primeira_modulo">Segunda horario da primeira turma</option>
+                        <option value="Primeira_turma_da_sesgunda_modulo">Primeiro horario da segunda turma</option>
+        </option>
+    </select>
+    <input type="submit" value="insert" ng-click="insert(nome,chamada,tipo_turma)"/>
+</body>
+</html>
