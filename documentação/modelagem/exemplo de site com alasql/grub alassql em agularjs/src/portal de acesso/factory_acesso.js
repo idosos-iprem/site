@@ -22,59 +22,79 @@ class bit{
         return array;
     }
     Rsa(conjunto, http){
-        var mensagem = String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) +  
-        String.fromCharCode(parseInt(conjunto.principal+conjunto.dois,2))+
-        String.fromCharCode(parseInt(conjunto.principal+conjunto.tres,2))
-         +  String.fromCharCode(parseInt(conjunto.quarto,2))+
-        String.fromCharCode(parseInt(conjunto.principal+conjunto.cinco,2)) + 
-         String.fromCharCode(parseInt(conjunto.quarto,2))+
-        String.fromCharCode(parseInt(conjunto.principal+conjunto.cinco,2)) +
-        String.fromCharCode(parseInt(conjunto.quarto,2))
-        + String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)); //127.0.0.1
-
-        var b =  String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) +  String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2));//11
-        var c = String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) + String.fromCharCode(parseInt(conjunto.principal+conjunto.tres,2));//17
+        return new Promise(response=>{
+            var mensagem = String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) +  
+            String.fromCharCode(parseInt(conjunto.principal+conjunto.dois,2))+
+            String.fromCharCode(parseInt(conjunto.principal+conjunto.tres,2))
+             +  String.fromCharCode(parseInt(conjunto.quarto,2))+
+            String.fromCharCode(parseInt(conjunto.principal+conjunto.cinco,2)) + 
+             String.fromCharCode(parseInt(conjunto.quarto,2))+
+            String.fromCharCode(parseInt(conjunto.principal+conjunto.cinco,2)) +
+            String.fromCharCode(parseInt(conjunto.quarto,2))
+            + String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)); //127.0.0.1
+    
+            var b =  String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) +  String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2));//11
+            var c = String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) + String.fromCharCode(parseInt(conjunto.principal+conjunto.tres,2));//17
+            
+            var d = parseInt(b) + parseInt(c) + parseInt(String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)));
+            var n = b * c;
+            var phi = (b-1)*(c-1);
+            var e =  parseInt(b) + parseInt(String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2))+ String.fromCharCode(parseInt(conjunto.principal+conjunto.dois,2)));
+            var texto = (conjunto.um *e)% n;
+            var urls = "http://"+mensagem+":"+8080+"//pessoas";
+            http.get(urls,function(res){
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header("Access-Control-Allow-Headers", "X-Requested-With");
+            }).then(resp=>{
+                
+                    console.log(resp);
+                    var s = {};
+                    s.nome = resp.nome;
+                    s.id = resp.senha;
+                    s.mensagem = texto;
+                    response(s);
+                },error=>{
+                    console.log(error);
+                });
+        })
         
-        var d = parseInt(b) + parseInt(c) + parseInt(String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)));
-        var n = b * c;
-        var phi = (b-1)*(c-1);
-        var e = 0;
-        for(var i = 0;i<phi;i++){
-            if(i > 1 && i<phi && phi /1&& phi/phi){
-                e = i;
-                break;
-            }
-        }
-        var texto = (mensagem.length *e)% n;
-        var url = mensagem+":"+8000+"//idosos";
-        http.get(url).then(resp=>{
-            console.log(resp);
-          //  window.location.assign("/www/site.html");
-        },error=>{
-            console.log(error);
-        });
-        // http.post(,{mensagem:texto,numero_primo:d, mod:n}).then(resp=>{
-        //     console.log(resp);
-        // },error=>{
-        //     console.log(error);
-        // });
     }
 }
 var servico = angular.module("acesso",[])
+
+
 servico.factory("dados",function($http){
     var bits = new bit();
     function binario(v1,v2)
     {
        return bits.enderenço_ip(v1,v2);
     }
-    function cripotografia(x){
-        bits.Rsa(x,$http);
+    function cripotografia(x,l,s){
+      return new Promise(resp=>{
+          var a = {};
+        bits.Rsa(x,$http).then(r=>{
+            console.log(r);
+            for(var i =0;i<r.length;i++){
+                if(r.nome == l && t.senha == s){
+                    a.nome = l;
+                    a.senha = s;
+                    r(a);
+                }
+            }
+        })
+      })
+        
     }
     return{
         ip:function(valor1,valor2){
 
            var x = binario(valor1,valor2);
-            cripotografia(x);
+          return x;
+        },
+        validar:function(x,login, senha){
+            cripotografia(x).then(resp=>{
+               // $state.go(".../www/site");
+            })
         }
     }
 })
