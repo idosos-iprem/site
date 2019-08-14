@@ -6,17 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="../src/controller.js"></script>
     <script  src="../src/chamada/factory.js"></script>
     <script src="../src/chamada/http_envio.js"></script>
     <script src="../src/portal de acesso/factory_acesso.js"></script>
+    <script src="../src/portal de acesso/http_envio_acesso.js"></script>
 </head>
 <body>
     <form>
-        <input type="text" ng-model="login"/>
-        <input type="password" ng-model="senha" />
-        <input type="submit" ng-click="enviar(login,senha)" />
+        <label> login</label>
+        <input type="text" ng-model="login"/></br>
+        <label>Senha</label>
+        <input type="password" ng-model="senha" /></br>
+        <input type="submit" ng-click="enviar(login,senha)" value="Entrar" />
     </form>
     
 
