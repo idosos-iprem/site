@@ -22,10 +22,10 @@ class  pegar_json{
     }
     
     // rais dos arquivos json
-   get_json_raiz(http){
+   get_json_raiz(http,x){
        try{
         return new Promise(response=>{
-            http.get("C:/Users/kevin.guimaraes/Desktop/banco/idosos.json").then(resp=>{
+            http.get(x+":8080//idosos").then(resp=>{
             response(response.lista_presença);
             },error=>{
                 console.log(error);
@@ -39,11 +39,11 @@ class  pegar_json{
        }
       
     }
-    post_dados(http,turma){
+    post_dados(http,turma,string){
      
             return new Promise(response=>{
                 try{
-                this.get_json_raiz(http).then(resp=>{
+                this.get_json_raiz(http,x).then(resp=>{
                     var lista_caminhos = resp;
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
@@ -77,10 +77,10 @@ class  pegar_json{
 var enivio_alasql = angular.module("enviar",[])
 enivio_alasql.factory("http_alasql",function($http){
     var dados = new pegar_json();
-    function http_enviar(tipo_turma){
+    function http_enviar(tipo_turma,string){
         try
         {
-                dados.post_dados($http,tipo_turma).then(r=>{
+                dados.post_dados($http,tipo_turma,string).then(r=>{
 
                 },error=>{
                 console.log(error);
@@ -94,8 +94,8 @@ enivio_alasql.factory("http_alasql",function($http){
     }
 
     return{
-        enviar:function(tipo){
-            http_enviar(tipo);
+        enviar:function(tipo,string){
+            http_enviar(tipo,string);
         }
     }
 })
