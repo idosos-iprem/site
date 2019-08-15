@@ -25,6 +25,7 @@ class  pegar_json{
    get_json_raiz(http,x){
        try{
         return new Promise(response=>{
+            x = "https://"+"127.0.0.1";//para teste
             http.get(x+":8080//idosos").then(resp=>{
             response(response.lista_presença);
             },error=>{
@@ -47,7 +48,9 @@ class  pegar_json{
                     var lista_caminhos = resp;
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
-                            
+                                string = "https://"+"127.0.0.1";//para teste;
+                                //var json =  
+                                $http.post(string + ":8080//dados_primeiro_modulo_primeiro",JSON.stringify())
                             break;
                             case "Segunda_turma_da_primeira_modulo":
     
