@@ -62,7 +62,7 @@ class criptografia_rsa{
                       a.chave2 = value.chave2;
                       a.mod = value.mod;
                       resp(a);
-                      break;
+                     
                      }
                      if(index == array.length-1){
                       resp("erro");
@@ -76,7 +76,7 @@ class criptografia_rsa{
     }
 }
 var servico = angular.module("rsa",[])
-servico.factory("criptografia",function($http){
+servico.factory("criptografia",function($http,$state,$stateParams){
     var rsa = new criptografia_rsa($http);
     function embalhar(x,login,senha){
        rsa.criptografia(x,login,senha).then(r=>{
@@ -85,6 +85,10 @@ servico.factory("criptografia",function($http){
          }
          else{
              console.log(r);
+        //      $state.go("/sites",{
+        //          chave1:r.chave,mod:r.mod,chave2:r.chave2
+        //      }, {inherit:false});
+        //    window.location.assign(document.location.href.replace("www/index.html","www/site.html"));
          }
        },error=>{
         console.log(error);
@@ -92,7 +96,7 @@ servico.factory("criptografia",function($http){
     }
     return {
         validar:function(b,login, senha){
-            embalhar(b,login,senha);
+           return embalhar(b,login,senha);
         }
     }
 })
