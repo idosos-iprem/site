@@ -3,7 +3,14 @@ class dados_alasql{
 
     }
     select(){
-
+        try{
+            var lista = alasql("SELECT * FROM teste2");
+            var json = JSON.stringify(lista);
+            return json;
+        }catch(e){
+            this.delete();
+        }
+        
     }
     delete()
     {
@@ -25,9 +32,8 @@ class  pegar_json{
    get_json_raiz(http,x){
        try{
         return new Promise(response=>{
-            x = "https://"+"127.0.0.1";//para teste
-            http.get(x+":8080//idosos").then(resp=>{
-            response(response.lista_presença);
+            http.get("http://"+x+":8080//idosos").then(resp=>{
+            response(resp.data.lista_presença);
             },error=>{
                 console.log(error);
                 this.enviar.delete();
@@ -40,25 +46,49 @@ class  pegar_json{
        }
       
     }
-    post_dados(http,turma,string){
-     
-            return new Promise(response=>{
+ async   post_dados(http,turma,string){
+    return new Promise(response=>{
                 try{
-                this.get_json_raiz(http,x).then(resp=>{
+                this.get_json_raiz(http,string).then(resp=>{
                     var lista_caminhos = resp;
+                    
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
-                                string = "https://"+"127.0.0.1";//para teste;
-                                //var json =  
-                                $http.post(string + ":8080//dados_primeiro_modulo_primeiro",JSON.stringify())
+                                var json =  this.enviar.select();
+                                console.log(json);
+                                http.post("http://"+string + ":8080"+lista_caminhos[0],json).then(resp=>{
+                                    console.log(resp)
+                                    this.enviar.delete();
+                                },erro=>{
+                                    console.log(erro)
+                                    this.enviar.delete(); 
+                                })
                             break;
                             case "Segunda_turma_da_primeira_modulo":
-    
+                                var json =  this.enviar.select();
+                                console.log(json);
+                                var url = "http://"+string + ":8080"+lista_caminhos[1];
+                                http.post(url,json).then(resp=>{
+                                    console.log(resp)
+                                    this.enviar.delete();
+                                },erro=>{
+                                    console.log(erro)
+                                    this.enviar.delete(); 
+                                })
                             break;
-                            case "Primeira_turma_da_sesgunda_modulo":
-    
+                            case "Primeira_turma_da_segunda_modulo":
+                                var json =  this.enviar.select();
+                                console.log(json);
+                                http.post("http://"+string + ":8080"+lista_caminhos[2],json).then(resp=>{
+                                    console.log(resp)
+                                    this.enviar.delete();
+                                },erro=>{
+                                    console.log(erro)
+                                    this.enviar.delete(); 
+                                })
                             break;
                         }
+                  
                        
                     },error=>{
                         console.log(error);
@@ -66,11 +96,11 @@ class  pegar_json{
                     })
             }
             catch(erro){
-                console.log(error);
+                console.log(erro);
                  this.enviar.delete();
             }
             
-            })
+        })
    
     
     }

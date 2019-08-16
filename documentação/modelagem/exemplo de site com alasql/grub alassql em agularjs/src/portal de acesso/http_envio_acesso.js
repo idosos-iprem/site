@@ -88,7 +88,7 @@ servico.factory("criptografia",function($http,$state,$stateParams){
         //      $state.go("/sites",{
         //          chave1:r.chave,mod:r.mod,chave2:r.chave2
         //      }, {inherit:false});
-        //    window.location.assign(document.location.href.replace("www/index.html","www/site.html"));
+         window.location.assign(document.location.href.replace("www/index.html","www/site.html"));
          }
        },error=>{
         console.log(error);

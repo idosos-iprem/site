@@ -35,7 +35,7 @@ app.controller("site",function($scope,servicos,http_alasql,$state,$rootScope){
       
         // })
         servicos.adiconar(nome,chamada,modulo);
-        http_alasql.enviar(modulo);
+        http_alasql.enviar(modulo,"127.0.0.1");
         
     }
 
@@ -43,7 +43,7 @@ app.controller("site",function($scope,servicos,http_alasql,$state,$rootScope){
 app.controller("portal",function($scope,dados,criptografia){
 $scope.enviar = function(x,y){
     var s = dados.ip(1,0);
-   var x = criptografia.validar(s,x,y);
-    console.log(x);
+   criptografia.validar(s,x,y);
+   
 }
 })

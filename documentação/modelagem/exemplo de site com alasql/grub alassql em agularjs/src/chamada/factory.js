@@ -1,12 +1,14 @@
 class alasqlprograma{
     constructor(){
         alasql("create database if not exists exemplo")
-       alasql("Create table if not exists teste2(number id ,string nome, string chamada,string nome_turma);");
+       alasql("Create table if not exists teste2(id number , nome string,  chamada string, nome_turma string);");
     }
     insert(nome,chamada, nome_turmas){
         const id  = 1;
-        var insert = "insert into teste2 values("+id+","+'"'+nome+'"'+","+'"'+chamada+'"'+","+'"'+nome_turmas+'"'+")";
-       var a = alasql(insert);
+        var insert = "insert into teste2 values(";
+        var valores = insert + id +','+'"'+nome + '"'+','
+        var resultado =  valores + '"'+chamada +'"'+','+'"'+nome_turmas+'"'+');';
+       var a = alasql(resultado);
        console.log(a);
     }
     
