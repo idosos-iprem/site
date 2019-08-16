@@ -62,7 +62,7 @@ class criptografia_rsa{
                       a.chave2 = value.chave2;
                       a.mod = value.mod;
                       resp(a);
-                     
+                      
                      }
                      if(index == array.length-1){
                       resp("erro");
@@ -83,12 +83,16 @@ servico.factory("criptografia",function($http,$state,$stateParams){
         if(r == "erro"){
             console.log("error");
          }
-         else{
+         if(r !="erro"){
              console.log(r);
+          //  window.location.assign(document.location.href.replace("www/index.html","www/site.html"));
+         }
+         else{
+             
         //      $state.go("/sites",{
         //          chave1:r.chave,mod:r.mod,chave2:r.chave2
         //      }, {inherit:false});
-         window.location.assign(document.location.href.replace("www/index.html","www/site.html"));
+        // 
          }
        },error=>{
         console.log(error);

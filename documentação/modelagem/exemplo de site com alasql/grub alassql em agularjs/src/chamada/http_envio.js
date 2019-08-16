@@ -56,7 +56,8 @@ class  pegar_json{
                             case "Primeira_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
                                 console.log(json);
-                                http.post("http://"+string + ":8080"+lista_caminhos[0],json).then(resp=>{
+                                var url = "http://"+string +":8080"+lista_caminhos[0];
+                                http.post(url,json).then(resp=>{
                                     console.log(resp)
                                     this.enviar.delete();
                                 },erro=>{
@@ -67,7 +68,7 @@ class  pegar_json{
                             case "Segunda_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
                                 console.log(json);
-                                var url = "http://"+string + ":8080"+lista_caminhos[1];
+                                var url = "http://"+string +":8080"+lista_caminhos[1];
                                 http.post(url,json).then(resp=>{
                                     console.log(resp)
                                     this.enviar.delete();
@@ -79,7 +80,8 @@ class  pegar_json{
                             case "Primeira_turma_da_segunda_modulo":
                                 var json =  this.enviar.select();
                                 console.log(json);
-                                http.post("http://"+string + ":8080"+lista_caminhos[2],json).then(resp=>{
+                                var url = "http://"+string + ":8080"+lista_caminhos[2];
+                                http.post(url,json).then(resp=>{
                                     console.log(resp)
                                     this.enviar.delete();
                                 },erro=>{
