@@ -131,6 +131,14 @@ enivio_alasql.factory("http_alasql",function($http){
     return{
         enviar:function(tipo,string){
             http_enviar(tipo,string);
+        },
+        descriptografia(chave_privata,mod,chave_publica){
+            var mensagem = (chave_privata[0] ** mod)%chave_publica;
+            for(var i = 1;i<chave_privata.lenght;i++){
+              
+            }
+            // var mensagem = (chave_privata ** mod)% chave_publica;
+            // var teste = String.fromCharCode(parseInt(mensagem,2));
         }
     }
 })

@@ -28,8 +28,13 @@ class criptografia_rsa{
                         break;
                     }
                 }
-                var texto = (mensagem.length ** e);
-                var criptografia = texto % n;
+                var array_binario =[];
+                var conjunto_array =[conjunto.principal,conjunto.um,conjunto.dois,conjunto.tres,conjunto.quarto,conjunto.cinco];
+                conjunto_array.forEach(function(value,index,arrays){
+                    var texto = value ** e;
+                    var criptografia = texto % n;
+                    array_binario.push(criptografia);
+                })
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";
                 this.http.get(urls).then(resp=>{
                     var s = {};
@@ -37,7 +42,7 @@ class criptografia_rsa{
                     for(var i =0;i<resp.data.pessoas.length;i++){
                         s.nome = resp.data.pessoas[i].nome;
                         s.senha = resp.data.pessoas[i].senha;
-                        s.criptografia = criptografia;
+                        s.criptografia = array_binario;
                         s.mod = d;
                         s.chave2 = n;
                         array.push({nome:s.nome,senha:s.senha, chave:s.criptografia,mod:s.mod,chave2:s.chave2});
@@ -76,23 +81,18 @@ class criptografia_rsa{
     }
 }
 var servico = angular.module("rsa",[])
-servico.factory("criptografia",function($http,$state,$stateParams){
+
+servico.factory("criptografia",function($http,$window){
     var rsa = new criptografia_rsa($http);
     function embalhar(x,login,senha){
        rsa.criptografia(x,login,senha).then(r=>{
         if(r == "erro"){
-            console.log("error");
+            console.log("erro");
          }
-         if(r !="erro"){
-             console.log(r);
-          //  window.location.assign(document.location.href.replace("www/index.html","www/site.html"));
-         }
-         else{
-             
-        //      $state.go("/sites",{
-        //          chave1:r.chave,mod:r.mod,chave2:r.chave2
-        //      }, {inherit:false});
-        // 
+         else if(r !="erro"|| r != undefined){
+             $window.localStorage["chaves"] = JSON.stringify(r);
+            var caminho = $window.location.href.replace("www/index.html","www/site.html");
+            $window.location.href = caminho;
          }
        },error=>{
         console.log(error);

@@ -1,42 +1,23 @@
-var app = angular.module("grub",["servico","enviar","acesso","rsa",'ui.router'])
-// app.config(function($stateProvider){
-//     var index = {
-//         name: 'index',
-//         url: '/index',
-//         templateUrl: window.location.pathname,
-//         controller:"portal",
-//       }
-    
-//       var site = {
-//         name: '/sites',
-//         url:"/sites",
-//         params: {
-//             chave1: null,
-//             mod:null,
-//             chave2:null,
-//         },   
-//         templateUrl:document.location.href.replace("www/index.html","www/site.html"),  
-//         controller:"site",
-//         controllerAs:"vm"
-//       }
-    
-//       $stateProvider.state(index);
-//       $stateProvider.state(site);
-// });
-app.controller("site",function($scope,servicos,http_alasql,$state,$rootScope){
-    var vm = this;
+var app = angular.module("grub",["servico","enviar","acesso","rsa"])
+app.controller("site",function($scope,servicos,http_alasql,$window){
     $scope.insert = function(nome,chamada,modulo){
-        // console.log($rootScope.$on);
-        // $rootScope.$on('$stateChangeSuccess', 
-        // function(event, unfoundState, fromState, fromParams){ 
-        //     console.log(unfoundState.to); // "lazy.state"
-        //     console.log(unfoundState.toParams); // {a:1, b:2}
-        //     console.log(unfoundState.options); // {inherit:false} + default options
-      
-        // })
-        servicos.adiconar(nome,chamada,modulo);
-        http_alasql.enviar(modulo,"127.0.0.1");
+
+        console.log(a);
+        // servicos.adiconar(nome,chamada,modulo);
+        // http_alasql.enviar(modulo,"127.0.0.1");
         
+    }
+    $scope.show = true;
+    $scope.dados_recebidos = function(){
+        var chave =$window.localStorage["chaves"];
+        if(chave == null ||chave == undefined || chave ==""){
+            $scope.show = false;
+        }
+        else{
+            var valores = JSON.parse(chave);
+            http_alasql.descriptografia(valores.chave,valores.mod,valores.chave2)
+        }
+       
     }
 
 });

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="../src/controller.js"></script>
     <script  src="../src/chamada/factory.js"></script>
@@ -14,14 +13,14 @@
     <script src="../src/portal de acesso/factory_acesso.js"></script>
     <script src="../src/portal de acesso/http_envio_acesso.js"></script>
 </head>
-<body >
-    <input type="text" ng-model="nome" />
-    <select  ng-model="chamada">
+<body ng-init="dados_recebidos()">
+    <input type="text" ng-model="nome" ng-show="show"/>
+    <select  ng-model="chamada" ng-show="show">
         <option value="presente">presente</option>
         <option value="falta">falta</option>
     </select>
     <label>Turmas</label>
-    <select ng-model="tipo_turma">
+    <select ng-model="tipo_turma" ng-show="show">
         <option></option>
         <option>
                         <option value="Primeira_turma_da_primeira_modulo" >Primeiro horario da primeira turma </option>
@@ -29,6 +28,6 @@
                         <option value="Primeira_turma_da_segunda_modulo">Primeiro horario da segunda turma</option>
         </option>
     </select>
-    <input type="submit" value="insert" ng-click="insert(nome,chamada,tipo_turma)"/>
+    <input type="submit" value="insert" ng-click="insert(nome,chamada,tipo_turma)" ng-show="show"/>
 </body>
 </html>
