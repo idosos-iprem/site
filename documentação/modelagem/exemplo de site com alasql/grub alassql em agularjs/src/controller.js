@@ -2,20 +2,22 @@ var app = angular.module("grub",["servico","enviar","acesso","rsa"])
 app.controller("site",function($scope,servicos,http_alasql,$window){
     $scope.insert = function(nome,chamada,modulo){
 
-        console.log(a);
-        // servicos.adiconar(nome,chamada,modulo);
-        // http_alasql.enviar(modulo,"127.0.0.1");
+        servicos.adiconar(nome,chamada,modulo);
+        http_alasql.enviar(modulo,$scope.ip);
         
     }
     $scope.show = true;
     $scope.dados_recebidos = function(){
         var chave =$window.localStorage["chaves"];
         if(chave == null ||chave == undefined || chave ==""){
+            $window.localStorage.clear();
             $scope.show = false;
         }
         else{
+            
             var valores = JSON.parse(chave);
-            http_alasql.descriptografia(valores.chave,valores.mod,valores.chave2)
+            $window.localStorage.clear();
+            $scope.ip = http_alasql.descriptografia(valores.chave,valores.mod,valores.chave2)
         }
        
     }

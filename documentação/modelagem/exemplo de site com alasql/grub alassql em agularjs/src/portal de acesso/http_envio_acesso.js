@@ -22,17 +22,26 @@ class criptografia_rsa{
                 var n = b * c;
                 var phi = (b-1)*(c-1);
                 var e =  0;
-                for(var u= 0;u<n;u++){
-                    e = (u*d) % phi;
-                    if(e /1 && e/e){
-                        break;
-                    }
-                }
+                let u = phi;
+                let v = n;
+               while(v>0){
+                   var r = u%v;
+                   u = v;
+                   v =r;
+               }
+               e  = u;
+
+                var arrays = [parseInt(conjunto.principal+conjunto.um,2),
+                    parseInt(conjunto.principal+conjunto.dois,2),
+                    parseInt(conjunto.principal+conjunto.tres,2),
+                    parseInt(conjunto.quarto,2),
+                    parseInt(conjunto.principal+conjunto.cinco,2)
+                ];
                 var array_binario =[];
-                var conjunto_array =[conjunto.principal,conjunto.um,conjunto.dois,conjunto.tres,conjunto.quarto,conjunto.cinco];
-                conjunto_array.forEach(function(value,index,arrays){
-                    var texto = value ** e;
-                    var criptografia = texto % n;
+                arrays.forEach(function(value,index,arrays){
+                    var numero = value;
+                     
+                    var criptografia = (numero **e)%n;
                     array_binario.push(criptografia);
                 })
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";

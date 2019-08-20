@@ -24,68 +24,58 @@ class dados_alasql{
     }
 }
 class  pegar_json{
-    constructor(){
+    constructor(x){
         this.enviar = new dados_alasql();
+        this.http = x;
     }
-    
     // rais dos arquivos json
-   get_json_raiz(http,x){
+   get_json_raiz(x){
        try{
         return new Promise(response=>{
-            http.get("http://"+x+":8080//idosos").then(resp=>{
-            response(resp.data.lista_presença);
+            this.http.get("http://"+x+":8080//idosos").then(resp=>{
+            response(resp.data);
             },error=>{
-                console.log(error);
                 this.enviar.delete();
             });
         })
        }
        catch(erro){
-        console.log(erro);
         this.enviar.delete();
        }
       
     }
- async   post_dados(http,turma,string){
+ async   post_dados(turma,string){
     return new Promise(response=>{
                 try{
-                this.get_json_raiz(http,string).then(resp=>{
-                    var lista_caminhos = resp;
+                this.get_json_raiz(string).then(resp=>{
+                    var lista_caminhos = resp[1];
                     
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
-                                console.log(json);
                                 var url = "http://"+string +":8080"+lista_caminhos[0];
                                 http.post(url,json).then(resp=>{
-                                    console.log(resp)
                                     this.enviar.delete();
                                 },erro=>{
-                                    console.log(erro)
                                     this.enviar.delete(); 
                                 })
                             break;
                             case "Segunda_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
-                                console.log(json);
                                 var url = "http://"+string +":8080"+lista_caminhos[1];
                                 http.post(url,json).then(resp=>{
                                     console.log(resp)
                                     this.enviar.delete();
                                 },erro=>{
-                                    console.log(erro)
                                     this.enviar.delete(); 
                                 })
                             break;
                             case "Primeira_turma_da_segunda_modulo":
                                 var json =  this.enviar.select();
-                                console.log(json);
                                 var url = "http://"+string + ":8080"+lista_caminhos[2];
                                 http.post(url,json).then(resp=>{
-                                    console.log(resp)
                                     this.enviar.delete();
                                 },erro=>{
-                                    console.log(erro)
                                     this.enviar.delete(); 
                                 })
                             break;
@@ -93,12 +83,10 @@ class  pegar_json{
                   
                        
                     },error=>{
-                        console.log(error);
                         this.enviar.delete();
                     })
             }
             catch(erro){
-                console.log(erro);
                  this.enviar.delete();
             }
             
@@ -111,18 +99,16 @@ class  pegar_json{
 
 var enivio_alasql = angular.module("enviar",[])
 enivio_alasql.factory("http_alasql",function($http){
-    var dados = new pegar_json();
+    var dados = new pegar_json($http);
     function http_enviar(tipo_turma,string){
         try
         {
-                dados.post_dados($http,tipo_turma,string).then(r=>{
+                dados.post_dados(tipo_turma,string).then(r=>{
 
                 },error=>{
-                console.log(error);
                 dados.enviar.delete();
                 })
         }catch(erro){
-            console.log(erro);
             dados.enviar.delete();
         }
        
@@ -132,13 +118,24 @@ enivio_alasql.factory("http_alasql",function($http){
         enviar:function(tipo,string){
             http_enviar(tipo,string);
         },
-        descriptografia(chave_privata,mod,chave_publica){
-            var mensagem = (chave_privata[0] ** mod)%chave_publica;
-            for(var i = 1;i<chave_privata.lenght;i++){
-              
+        descriptografia(texto,d,chave_privata){
+            
+            var texto_binario = [];
+            for(var i = 0;i<texto.length;i++){
+                var texto2 = texto[i].toString(2);
+                texto_binario.push(texto2);
             }
-            // var mensagem = (chave_privata ** mod)% chave_publica;
-            // var teste = String.fromCharCode(parseInt(mensagem,2));
+            var mensagem = 
+            String.fromCharCode(parseInt(texto_binario[0],2))+
+            String.fromCharCode(parseInt(texto_binario[1],2)) + 
+            String.fromCharCode(parseInt(texto_binario[2],2))+
+            String.fromCharCode(parseInt(texto_binario[3],2))+
+            String.fromCharCode(parseInt(texto_binario[4],2))+
+            String.fromCharCode(parseInt(texto_binario[3],2)) +
+            String.fromCharCode(parseInt(texto_binario[4],2))+
+            String.fromCharCode(parseInt(texto_binario[3],2)) +
+            String.fromCharCode(parseInt(texto_binario[0],2));
+            return mensagem;
         }
     }
 })
