@@ -8,17 +8,25 @@ app.controller("site",function($scope,servicos,http_alasql,$window){
     }
     $scope.show = true;
     $scope.dados_recebidos = function(){
-        var chave =$window.localStorage["chaves"];
-        if(chave == null ||chave == undefined || chave ==""){
+        try{
+            var chave =$window.localStorage["chaves"];
+            if(chave == null ||chave == undefined || chave ==""){
+                $window.localStorage.clear();
+                $scope.show = false;
+            }
+            else{
+                
+                var valores = JSON.parse(chave);
+                $window.localStorage.clear();
+                $scope.ip = http_alasql.descriptografia(valores.chave,valores.chave2);
+
+            }
+        }catch(e)
+        {
+            console.log(e);
             $window.localStorage.clear();
-            $scope.show = false;
         }
-        else{
-            
-            var valores = JSON.parse(chave);
-            $window.localStorage.clear();
-            $scope.ip = http_alasql.descriptografia(valores.chave,valores.mod,valores.chave2)
-        }
+       
        
     }
 

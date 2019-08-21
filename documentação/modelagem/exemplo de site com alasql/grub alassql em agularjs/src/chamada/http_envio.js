@@ -54,7 +54,7 @@ class  pegar_json{
                             case "Primeira_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
                                 var url = "http://"+string +":8080"+lista_caminhos[0];
-                                http.post(url,json).then(resp=>{
+                                this.http.post(url,json).then(resp=>{
                                     this.enviar.delete();
                                 },erro=>{
                                     this.enviar.delete(); 
@@ -63,7 +63,7 @@ class  pegar_json{
                             case "Segunda_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
                                 var url = "http://"+string +":8080"+lista_caminhos[1];
-                                http.post(url,json).then(resp=>{
+                                this.http.post(url,json).then(resp=>{
                                     console.log(resp)
                                     this.enviar.delete();
                                 },erro=>{
@@ -73,7 +73,7 @@ class  pegar_json{
                             case "Primeira_turma_da_segunda_modulo":
                                 var json =  this.enviar.select();
                                 var url = "http://"+string + ":8080"+lista_caminhos[2];
-                                http.post(url,json).then(resp=>{
+                                this.http.post(url,json).then(resp=>{
                                     this.enviar.delete();
                                 },erro=>{
                                     this.enviar.delete(); 
@@ -118,23 +118,13 @@ enivio_alasql.factory("http_alasql",function($http){
         enviar:function(tipo,string){
             http_enviar(tipo,string);
         },
-        descriptografia(texto,d,chave_privata){
+        incluir:function(){
             
-            var texto_binario = [];
-            for(var i = 0;i<texto.length;i++){
-                var texto2 = texto[i].toString(2);
-                texto_binario.push(texto2);
-            }
-            var mensagem = 
-            String.fromCharCode(parseInt(texto_binario[0],2))+
-            String.fromCharCode(parseInt(texto_binario[1],2)) + 
-            String.fromCharCode(parseInt(texto_binario[2],2))+
-            String.fromCharCode(parseInt(texto_binario[3],2))+
-            String.fromCharCode(parseInt(texto_binario[4],2))+
-            String.fromCharCode(parseInt(texto_binario[3],2)) +
-            String.fromCharCode(parseInt(texto_binario[4],2))+
-            String.fromCharCode(parseInt(texto_binario[3],2)) +
-            String.fromCharCode(parseInt(texto_binario[0],2));
+        },
+        descriptografia(texto,key)
+        { publicKey
+            var mensagem =key.publicKey.decrypt(texto);
+               
             return mensagem;
         }
     }

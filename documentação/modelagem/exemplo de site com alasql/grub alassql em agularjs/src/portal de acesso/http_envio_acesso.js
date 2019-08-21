@@ -14,36 +14,11 @@ class criptografia_rsa{
                 String.fromCharCode(parseInt(conjunto.principal+conjunto.cinco,2)) +
                 String.fromCharCode(parseInt(conjunto.quarto,2))
                 + String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2));
-        
-                var b =  String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) +  String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2));//11
-                var c = String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) + String.fromCharCode(parseInt(conjunto.principal+conjunto.tres,2));//17
-                
-                var d = parseInt(b) + parseInt(c) + parseInt(String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)));
-                var n = b * c;
-                var phi = (b-1)*(c-1);
-                var e =  0;
-                let u = phi;
-                let v = n;
-               while(v>0){
-                   var r = u%v;
-                   u = v;
-                   v =r;
-               }
-               e  = u;
 
-                var arrays = [parseInt(conjunto.principal+conjunto.um,2),
-                    parseInt(conjunto.principal+conjunto.dois,2),
-                    parseInt(conjunto.principal+conjunto.tres,2),
-                    parseInt(conjunto.quarto,2),
-                    parseInt(conjunto.principal+conjunto.cinco,2)
-                ];
-                var array_binario =[];
-                arrays.forEach(function(value,index,arrays){
-                    var numero = value;
-                     
-                    var criptografia = (numero **e)%n;
-                    array_binario.push(criptografia);
-                })
+           var rsa = forge.pki.rsa.generateKeyPair(1024);
+            var utf8 =  forge.util.encodeUtf8(mensagem);
+            //erro ainda na criptografia
+            var ciphertext = rsa.privateKey.sign(utf8);
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";
                 this.http.get(urls).then(resp=>{
                     var s = {};
@@ -51,10 +26,9 @@ class criptografia_rsa{
                     for(var i =0;i<resp.data.pessoas.length;i++){
                         s.nome = resp.data.pessoas[i].nome;
                         s.senha = resp.data.pessoas[i].senha;
-                        s.criptografia = array_binario;
-                        s.mod = d;
-                        s.chave2 = n;
-                        array.push({nome:s.nome,senha:s.senha, chave:s.criptografia,mod:s.mod,chave2:s.chave2});
+                        s.criptografia = ciphertext;
+                        s.chave2 = rsa;
+                        array.push({nome:s.nome,senha:s.senha, chave:s.criptografia,chave2:s.chave2});
                     }
                         response(array);
                     },error=>{
@@ -74,7 +48,6 @@ class criptografia_rsa{
                      if(value.nome == l && value.senha == s){
                       a.chave = value.chave;
                       a.chave2 = value.chave2;
-                      a.mod = value.mod;
                       resp(a);
                       
                      }
