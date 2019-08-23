@@ -121,11 +121,20 @@ enivio_alasql.factory("http_alasql",function($http){
         incluir:function(){
             
         },
-        descriptografia(texto,key)
-        { publicKey
-            var mensagem =key.publicKey.decrypt(texto);
-               
-            return mensagem;
+        descriptografia(texto,key,mod)
+        { 
+            var d  = parseInt(mod);
+            var resto = {
+                um:(texto.um**d),
+                dois:(texto.dois**d),
+                tres:(texto.tres**d),
+                quarto:(texto.quarto*d),
+                cinco:(texto.cinco**d)
+            }
+            var descriptografia = (resto.um %key);
+            var mensagem = descriptografia.toString(2);
+            return texto_decimal;
+           
         }
     }
 })

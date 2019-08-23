@@ -18,7 +18,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window){
                 
                 var valores = JSON.parse(chave);
                 $window.localStorage.clear();
-                $scope.ip = http_alasql.descriptografia(valores.chave,valores.chave2);
+                $scope.ip = http_alasql.descriptografia(valores.chave,valores.chave2,valores.mod);
 
             }
         }catch(e)
