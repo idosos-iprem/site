@@ -18,39 +18,49 @@ class criptografia_rsa{
                 var p = String.fromCharCode(parseInt(conjunto.principal+conjunto.um,2)) +  String.fromCharCode(parseInt(conjunto.principal+conjunto.tres,2));//17
                 var n = p * q;
                 var z = (p-1)*(q-1);
-                    var d = this.primo();
-                    var bool = true;
-                    var numero = 0;
-                    do{
-                        var numero= this.primo();
-                       if(numero %z==1)bool = false;
-                    }while(bool);
-                   var e = numero; 
-                   
-                
-                var texto = {
-                    um:parseInt(conjunto.principal+conjunto.um,2),
-                    dois:parseInt(conjunto.principal+conjunto.dois,2),
-                    tres:parseInt(conjunto.principal+conjunto.tres,2),
-                    quarto:parseInt(conjunto.quarto,2),
-                    cinco:parseInt(conjunto.principal+conjunto.cinco,2)
+
+                var d,e = 0;
+                var valor = false;
+                    do{  
+                    d = this.primo(z); 
+                    e = this.primo(z);
+                    valor = (d * e)%z;
+                    if(valor == 1)valor = true;
+                    else valor = false;
+                    
+                }while( valor==false|| d==e);
+                while(d>e){
+                    d = this.primo(z); 
                 }
+               
+
+                    var texto = {
+                        um:parseInt(conjunto.principal+conjunto.um,2),
+                        dois:parseInt(conjunto.principal+conjunto.dois,2),
+                        tres:parseInt(conjunto.principal+conjunto.tres,2),
+                        quarto:parseInt(conjunto.quarto,2),
+                        cinco:parseInt(conjunto.principal+conjunto.cinco,2)
+                    }
                 var resto = [];
                 var  criptografia = [];
-                resto.push({
-                    um:texto.um**e,
-                    dois:texto.dois**e,
-                    tres:texto.tres**e,
-                    quarto:texto.quarto**e,
-                    cinco:texto.cinco**e
-                });
-                criptografia.push({
-                    um:resto[0].um %n,
-                    dois:resto[0].dois %n,
-                    tres:resto[0].tres %n,
-                    quarto:resto[0].quarto %n,
-                    cinco:resto[0].cinco %n
-                })
+
+                    resto.push({
+                        um:Math.pow(texto.um,e),
+                        dois:Math.pow(texto.dois,e),
+                        tres:Math.pow(texto.tres,e),
+                        quarto:Math.pow(texto.quarto,e),
+                        cinco:Math.pow(texto.cinco,e)
+                    });
+                    criptografia.push({
+                        um:resto[0].um %n,
+                        dois:resto[0].dois %n,
+                        tres:resto[0].tres %n,
+                        quarto:resto[0].quarto %n,
+                        cinco:resto[0].cinco %n
+                    })
+                
+                
+
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";
                 this.http.get(urls).then(resp=>{
                     var s = {};
@@ -72,39 +82,38 @@ class criptografia_rsa{
             window.close();
         }
     }
-    primo(operador){
-        var bool = true;
-        var b;
-        var c = 0;
-        var i = 2;
-       
-            while(bool)
-            {
-                b =  Math.floor(Math.random() *10);
-                c = Math.floor(Math.random() *10);
-                var r = c% b;
-                b = c;
-                c = r;
-                
-                switch(c){
-                    case 2:
-                        c = 1;
-                        bool = false;
+    fatorial_primo(z){
+        var r = 1;
+        var e = 0;
+                while(r<=z){
+                    e = r * z;
+                    if(e % z ==1){
                         break;
-                        default:
-                                if(c% i ==0)
-                                {
-                                    c = i;
-                                    bool = false;
-                                }
-                        break;
+                    }
+                    else e = 0;
+                    r++;
                 }
-                i++;
-            }
-            i = 2;
-            return c;
         
-
+        return r;
+    }
+    primo(z){
+        var c = 0;
+        var x = 0;
+        var b = 0;
+        c =Math.floor(Math.random() *50);
+        b = this.fatorial_primo(c,z);
+                for(var i = 1;i<=b;i++){
+                    if(this.Divisaoexata(b,i)){
+                        x++;
+                    }
+                }
+        if(x ==2){
+            return b;
+        }
+        else return 0;
+    }
+    Divisaoexata(num,i){
+        return (num % i) ==0;
     }
     criptografia(x,l,s){
         try{
