@@ -118,18 +118,15 @@ enivio_alasql.factory("http_alasql",function($http){
         enviar:function(tipo,string){
             http_enviar(tipo,string);
         },
-        incluir:function(){
-            
-        },
-        descriptografia(texto,key,mod)
+        numeros_criptograficos(texto,key,mod)
         { 
             var resto = {};
-                resto.um = Math.pow(texto.um,mod);
-                var teste = resto.um %key;
-                var mensagem =teste.toString(2);
-
+            resto.um = (texto.um **mod);
+           var a = (resto.um) %key;
            
-            return mensagem;
+               
+           
+            
            
         }
     }

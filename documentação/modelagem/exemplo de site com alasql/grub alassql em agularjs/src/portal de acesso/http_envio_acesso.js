@@ -22,17 +22,15 @@ class criptografia_rsa{
                 var d,e = 0;
                 var valor = false;
                     do{  
-                    d = this.primo(z); 
-                    e = this.primo(z);
+                    // chave privada
+                    d = this.primo();
+                    // chave publica 
+                    e = this.Euler();
                     valor = (d * e)%z;
                     if(valor == 1)valor = true;
                     else valor = false;
                     
                 }while( valor==false|| d==e);
-                while(d>e){
-                    d = this.primo(z); 
-                }
-               
 
                     var texto = {
                         um:parseInt(conjunto.principal+conjunto.um,2),
@@ -45,22 +43,19 @@ class criptografia_rsa{
                 var  criptografia = [];
 
                     resto.push({
-                        um:Math.pow(texto.um,e),
-                        dois:Math.pow(texto.dois,e),
-                        tres:Math.pow(texto.tres,e),
-                        quarto:Math.pow(texto.quarto,e),
-                        cinco:Math.pow(texto.cinco,e)
+                        um: texto.um**e,
+                        dois:texto.dois**e,
+                        tres:texto.tres**e,
+                        quarto:texto.quarto**e,
+                        cinco:texto.cinco**e
                     });
-                    criptografia.push({
-                        um:resto[0].um %n,
-                        dois:resto[0].dois %n,
-                        tres:resto[0].tres %n,
-                        quarto:resto[0].quarto %n,
-                        cinco:resto[0].cinco %n
-                    })
-                
-                
-
+                        criptografia.push({
+                            um:(resto[0].um)%n,
+                            dois:(resto[0].dois) %n,
+                            tres:(resto[0].tres) %n,
+                            quarto:(resto[0].quarto) %n,
+                            cinco:(resto[0].cinco) %n
+                        })
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";
                 this.http.get(urls).then(resp=>{
                     var s = {};
@@ -82,6 +77,23 @@ class criptografia_rsa{
             window.close();
         }
     }
+    Euler(){
+      var anterior = this.primo(); 
+      var atual = this.primo();
+      var resto = anterior % atual;
+        while(resto!= 0 && resto.toString() != NaN.toString() &&resto != Infinity){
+            anterior = atual;
+            atual = resto;
+            resto = anterior % atual;
+        }
+        return atual;
+       
+
+    }
+    mod( m, n )
+		{			
+			return m - n*Math.floor(m/n)
+		}
     fatorial_primo(z){
         var r = 1;
         var e = 0;
@@ -96,12 +108,12 @@ class criptografia_rsa{
         
         return r;
     }
-    primo(z){
+    primo(){
         var c = 0;
         var x = 0;
         var b = 0;
-        c =Math.floor(Math.random() *50);
-        b = this.fatorial_primo(c,z);
+        c = Math.floor(Math.random() *100);
+        b = this.fatorial_primo(c);
                 for(var i = 1;i<=b;i++){
                     if(this.Divisaoexata(b,i)){
                         x++;
