@@ -44,11 +44,22 @@ class  pegar_json{
        }
       
     }
+     mdc( a,b)
+    {
+        var bool = true;			
+        while(bool){
+            var r = b%a;
+            b = a;
+            a = r;
+            if(b>0 && a>0)bool =false;
+        }
+        return b;
+    }
  async   post_dados(turma,string){
     return new Promise(response=>{
                 try{
                 this.get_json_raiz(string).then(resp=>{
-                    var lista_caminhos = resp[1];
+                    var lista_caminhos = resp.lista_presença;
                     
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
@@ -113,21 +124,38 @@ enivio_alasql.factory("http_alasql",function($http){
         }
        
     }
-
+function  mdc( a,b)
+{
+    var bool = true;			
+    while(bool){
+        var r = b%a;
+        b = a;
+        a = r;
+        if(b>0 && a>0)bool =false;
+    }
+    return b;
+}
     return{
         enviar:function(tipo,string){
             http_enviar(tipo,string);
         },
         numeros_criptograficos(texto,key,mod)
         { 
-            var resto = {};
-            resto.um = (texto.um **mod);
-           var a = (resto.um) %key;
-           
-               
-           
-            
-           
+            var valor = [texto.um,texto.dois,texto.tres,texto.quarto,texto.cinco];
+            var descriptografia = [];
+            for(var i = 0;i<valor.length;i++){
+                descriptografia.push( PowerMod(valor[i],mod,key));
+            }
+            var mensagem = String.fromCharCode( parseInt(descriptografia[0].toString(2),2)) + //1
+            String.fromCharCode( parseInt(descriptografia[1].toString(2),2)) + //2
+            String.fromCharCode( parseInt(descriptografia[2].toString(2),2)) + //7
+            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + //.
+            String.fromCharCode( parseInt(descriptografia[4].toString(2),2)) + //0
+            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + //.
+            String.fromCharCode( parseInt(descriptografia[4].toString(2),2)) + //0
+            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + //.
+            String.fromCharCode( parseInt(descriptografia[0].toString(2),2)); //1
+            return mensagem;
         }
     }
 })

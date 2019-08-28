@@ -20,6 +20,7 @@ class criptografia_rsa{
                 var z = (p-1)*(q-1);
 
                 var d,e = 0;
+               
                 var valor = false;
                     do{  
                     // chave privada
@@ -39,22 +40,14 @@ class criptografia_rsa{
                         quarto:parseInt(conjunto.quarto,2),
                         cinco:parseInt(conjunto.principal+conjunto.cinco,2)
                     }
-                var resto = [];
                 var  criptografia = [];
 
-                    resto.push({
-                        um: texto.um**e,
-                        dois:texto.dois**e,
-                        tres:texto.tres**e,
-                        quarto:texto.quarto**e,
-                        cinco:texto.cinco**e
-                    });
                         criptografia.push({
-                            um:(resto[0].um)%n,
-                            dois:(resto[0].dois) %n,
-                            tres:(resto[0].tres) %n,
-                            quarto:(resto[0].quarto) %n,
-                            cinco:(resto[0].cinco) %n
+                            um: PowerMod(texto.um,e,n),
+                            dois: PowerMod(texto.dois,e,n),
+                            tres: PowerMod(texto.tres,e,n),
+                            quarto: PowerMod(texto.quarto,e,n),
+                            cinco: PowerMod(texto.cinco,e,n)
                         })
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";
                 this.http.get(urls).then(resp=>{
@@ -77,6 +70,7 @@ class criptografia_rsa{
             window.close();
         }
     }
+   
     Euler(){
       var anterior = this.primo(); 
       var atual = this.primo();
@@ -87,13 +81,10 @@ class criptografia_rsa{
             resto = anterior % atual;
         }
         return atual;
-       
+    
 
     }
-    mod( m, n )
-		{			
-			return m - n*Math.floor(m/n)
-		}
+
     fatorial_primo(z){
         var r = 1;
         var e = 0;
