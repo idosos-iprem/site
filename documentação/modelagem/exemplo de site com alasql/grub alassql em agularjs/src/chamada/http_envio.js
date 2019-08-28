@@ -5,7 +5,8 @@ class dados_alasql{
     select(){
         try{
             var lista = alasql("SELECT * FROM teste2");
-            var json = JSON.stringify(lista);
+            var listar = [lista];
+            var json = JSON.stringify(listar[0]);
             return json;
         }catch(e){
             this.delete();
@@ -14,7 +15,8 @@ class dados_alasql{
     }
     delete()
     {
-        try{
+        try
+        {
             var confirmar = alasql("delete from  teste2");
             if(confirmar == 1)console.log("deletado");
         }
@@ -59,17 +61,26 @@ class  pegar_json{
     return new Promise(response=>{
                 try{
                 this.get_json_raiz(string).then(resp=>{
-                    var lista_caminhos = resp.lista_presença;
-                    
+                    var lista_caminhos = resp.lista;
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
-                                var json =  this.enviar.select();
+                                var dados_arquivos =  this.enviar.select();
                                 var url = "http://"+string +":8080"+lista_caminhos[0];
-                                this.http.post(url,json).then(resp=>{
-                                    this.enviar.delete();
-                                },erro=>{
-                                    this.enviar.delete(); 
+                                this.http.get(url).then(ler=>{
+                                   var visulizar =  JSON.stringify(ler.data);//receber dados
+                                    var parse_josn = JSON.parse(visulizar);// passar dados em javascript
+                                    parse_josn[0].id =  dados_arquivos[0].id;//modificar o di
+                                    parse_josn[0].nome =  dados_arquivos[0].nome;//err
+                                    visulizar.chamada = parse_josn[0].chamada;
+                                    visulizar.nome_turma = parse_josn[0].nome_turma;
+
+                                    this.http.put(url,visulizar).then(resp=>{
+                                        this.enviar.delete();
+                                    },erro=>{
+                                        this.enviar.delete(); 
+                                    })
                                 })
+                                
                             break;
                             case "Segunda_turma_da_primeira_modulo":
                                 var json =  this.enviar.select();
@@ -124,17 +135,6 @@ enivio_alasql.factory("http_alasql",function($http){
         }
        
     }
-function  mdc( a,b)
-{
-    var bool = true;			
-    while(bool){
-        var r = b%a;
-        b = a;
-        a = r;
-        if(b>0 && a>0)bool =false;
-    }
-    return b;
-}
     return{
         enviar:function(tipo,string){
             http_enviar(tipo,string);
