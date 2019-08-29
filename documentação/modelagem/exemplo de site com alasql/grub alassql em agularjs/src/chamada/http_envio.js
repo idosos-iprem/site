@@ -26,15 +26,16 @@ class dados_alasql{
     }
 }
 class  pegar_json{
-    constructor(x){
+    constructor(x,y){
         this.enviar = new dados_alasql();
         this.http = x;
+        this.resource = y;
     }
     // rais dos arquivos json
    get_json_raiz(x){
        try{
         return new Promise(response=>{
-            this.http.get("http://"+x+":8080//idosos").then(resp=>{
+            this.http.get(x+"//idosos").then(resp=>{
             response(resp.data);
             },error=>{
                 this.enviar.delete();
@@ -64,22 +65,30 @@ class  pegar_json{
                     var lista_caminhos = resp.lista;
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
-                                var dados_arquivos =  this.enviar.select();
-                                var url = "http://"+string +":8080"+lista_caminhos[0];
-                                this.http.get(url).then(ler=>{
-                                   var visulizar =  JSON.stringify(ler.data);//receber dados
-                                    var parse_josn = JSON.parse(visulizar);// passar dados em javascript
-                                    parse_josn[0].id =  dados_arquivos[0].id;//modificar o di
-                                    parse_josn[0].nome =  dados_arquivos[0].nome;//err
-                                    visulizar.chamada = parse_josn[0].chamada;
-                                    visulizar.nome_turma = parse_josn[0].nome_turma;
+                                var dados_arquivos =  JSON.parse(this.enviar.select());
+                                var url = string +lista_caminhos[0];
+                                var servico = this.resource(url ,{}, {
+                                    update: { method: 'post'},
+                                    get:{method:"get"}
+                                  });
+                                  servico.get({},resp=>{
+                                      var data = resp.aulas;
+                                  })
+                                   
+                                  
+                                    //data.$save();
+                                // this.http.get(url).then(ler=>{
+                                //     var alertar;
+                                //    var visulizar = JSON.stringify(ler.data[0],(key,valor)=>{
+                                //     alertar = [valor.aulas];                                  
+                                //        console.log(valor)
+                                //    });//receber dados
+                                //    alertar[0].index = {id:dados_arquivos[0].id,
+                                //     nome:dados_arquivos[0].nome
+                                //     };
 
-                                    this.http.put(url,visulizar).then(resp=>{
-                                        this.enviar.delete();
-                                    },erro=>{
-                                        this.enviar.delete(); 
-                                    })
-                                })
+                                   //response(alertar[0]);
+                               // })
                                 
                             break;
                             case "Segunda_turma_da_primeira_modulo":
@@ -119,14 +128,15 @@ class  pegar_json{
 
 }
 
-var enivio_alasql = angular.module("enviar",[])
-enivio_alasql.factory("http_alasql",function($http){
-    var dados = new pegar_json($http);
+var enivio_alasql = angular.module("enviar",['ngResource'])
+enivio_alasql.factory("http_alasql",function($http,$resource){
+    var dados = new pegar_json($http,$resource);
     function http_enviar(tipo_turma,string){
         try
         {
+            string = "http://"+string +":8080";
                 dados.post_dados(tipo_turma,string).then(r=>{
-
+                  
                 },error=>{
                 dados.enviar.delete();
                 })
@@ -136,7 +146,7 @@ enivio_alasql.factory("http_alasql",function($http){
        
     }
     return{
-        enviar:function(tipo,string){
+        enviar:function(tipo,string,resource){
             http_enviar(tipo,string);
         },
         numeros_criptograficos(texto,key,mod)

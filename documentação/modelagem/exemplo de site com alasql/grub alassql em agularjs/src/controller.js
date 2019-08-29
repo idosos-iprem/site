@@ -1,4 +1,5 @@
-var app = angular.module("grub",["servico","enviar","acesso","rsa"])
+var app = angular.module("grub",["servico","enviar","acesso","rsa",])
+
 app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
     $scope.insert = function(nome,chamada,modulo){
 
