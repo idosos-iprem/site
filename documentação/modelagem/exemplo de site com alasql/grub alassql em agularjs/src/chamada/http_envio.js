@@ -67,16 +67,61 @@ class  pegar_json{
                             case "Primeira_turma_da_primeira_modulo":
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
                                 var url = string +lista_caminhos[0];
-                                var servico = this.resource(url ,{}, {
-                                    update: { method: 'post'},
-                                    get:{method:"get"}
-                                  });
-                                  servico.get({},resp=>{
-                                      var data = resp.aulas;
-                                  })
+                                var servico = this.resource(url,{},{
+                                    remove: {method:'DELETE'},
+                                    query:{method:'GET',isArray: true},
+                                    get: { method: "GET"},
+                                    update:{method:"Put"}
+                                });
+                                servico.get({},resp=>{
+                                    var data = JSON.stringify(resp);
                                    
-                                  
-                                    //data.$save();
+                                 
+                                     var parse_data = JSON.parse(data);
+                                     var ultimo = parse_data.aulas.length-1;
+                                        if(ultimo==0){
+                                            parse_data.aulas[ultimo].id = dados_arquivos[0].id;
+                                            parse_data.aulas[ultimo].chamada = dados_arquivos[0].chamada;
+                                            parse_data.aulas[ultimo].nome = dados_arquivos[0].nome;
+                                            parse_data.aulas[ultimo].nome_turma = dados_arquivos[0].nome_turma;
+                                            parse_data.aulas[ultimo].presensa = "presente";
+                                            var dados  = parse_data.aulas[ultimo];
+                                            var organizar ="{"
+                                            +"id"+":"+dados.id+","+
+                                            "chamada"+":"+dados.chamada+","+"nome"+":"+dados.nome+","+
+                                            "nome_turma"+":"+dados.nome_turma+","+"presensa"+":"+dados.presensa+"}";
+                                            var reg = new RegExp("b/g");
+                                            var converte = organizar.replace(reg, '');
+                                            servico.query({"aulas[0].id":0},function(r){
+                                                console.log(r);
+                                            })
+                                            // servico.update(converte,function(data){
+                                            //     console.log("modificado");
+                                            // })
+                                        }
+                                        else{
+
+                                        }
+                                })
+                                
+                                   
+                                    //     data.push("id","nome");
+                                    //     console.log(data);
+                                    //     var dados = JSON.stringify(data);
+                                    //     // resp.$save(dados.aulas,resp=>{
+                                    //     //     console.log(resp);
+                                    // }else{
+                                    //     while(i>=0){
+                                    //         data.push({
+                                    //           id:dados_arquivos[i].id
+                                    //         })
+                                    //       i--;
+                                    //     }
+                                    // }
+                                    
+                                   
+                                 
+                                  // this.http.post(url,)
                                 // this.http.get(url).then(ler=>{
                                 //     var alertar;
                                 //    var visulizar = JSON.stringify(ler.data[0],(key,valor)=>{
@@ -135,8 +180,10 @@ enivio_alasql.factory("http_alasql",function($http,$resource){
         try
         {
             string = "http://"+string +":8080";
-                dados.post_dados(tipo_turma,string).then(r=>{
-                  
+                dados.post_dados(tipo_turma,string).then(r=>
+                    {
+                    console.log(r);
+                   // dados.http.post()
                 },error=>{
                 dados.enviar.delete();
                 })
