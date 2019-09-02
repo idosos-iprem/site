@@ -15,6 +15,8 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
                 if(chave == null ||chave == undefined || chave ==""){
                     $window.localStorage.clear();
                     $scope.show = false;
+                    var caminho = $window.location.href.replace("www/site.html","www/index.html");
+                     $window.location.replace(caminho);
                 }
                 else{
                     
@@ -28,7 +30,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
                 console.log(e);
                 $window.localStorage.clear();
             }
-        },500)
+        },50)
        
        
        

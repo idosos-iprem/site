@@ -154,7 +154,7 @@ servico.factory("criptografia",function($http,$window){
          else if(r !="erro"|| r != undefined){
              $window.localStorage["chaves"] = JSON.stringify(r);
             var caminho = $window.location.href.replace("www/index.html","www/site.html");
-            $window.location.href = caminho;
+            $window.location.replace(caminho);
          }
        },error=>{
         console.log(error);
