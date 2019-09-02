@@ -12,6 +12,6 @@
             "url": "http://localhost/index.html",
             "webRoot": "${workspaceFolder}",
             "file": "${workspaceFolder}/www/index.html"
-        },
+        }
     ]
 }

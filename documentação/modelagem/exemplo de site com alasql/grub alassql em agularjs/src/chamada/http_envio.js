@@ -47,113 +47,127 @@ class  pegar_json{
        }
       
     }
-     mdc( a,b)
+    async get(x)
     {
-        var bool = true;			
-        while(bool){
-            var r = b%a;
-            b = a;
-            a = r;
-            if(b>0 && a>0)bool =false;
-        }
-        return b;
+        return new Promise(resp=>{
+            this.http.get(x).then(r=>{
+                resp(r);
+            })
+        })
     }
- async   post_dados(turma,string){
-    return new Promise(response=>{
+post_dados(turma,string){
                 try{
                 this.get_json_raiz(string).then(resp=>{
                     var lista_caminhos = resp.lista;
                         switch(turma){
                             case "Primeira_turma_da_primeira_modulo":
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
-                                var url = string +lista_caminhos[0];
-                                var servico = this.resource(url,{},{
+                                var url = string +lista_caminhos[0]+"/:aulas";
+                                var servico = this.resource(url,{aulas:"@aulas"},{
                                     remove: {method:'DELETE'},
-                                    query:{method:'GET',isArray: true},
-                                    get: { method: "GET"},
-                                    update:{method:"Put"}
+                                    get: { method: "GET",params:{aulas:"@aulas"}},
+                                    update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
-                                servico.get({},resp=>{
-                                    var data = JSON.stringify(resp);
+                                this.get(url).then(r=>{
+                                    console.log(r);
+                                    var numero = r.data.length;
+                                    if(numero == 0){
+                                            var dados = "";
+                                           
+                                                r.data = {aulas:[{id:dados_arquivos[0].id,
+                                                    chamada:dados_arquivos[0].chamada,
+                                                    nome:dados_arquivos[0].nome,
+                                                    nome_turma: dados_arquivos[0].nome_turma,
+                                                    presensa:"presente"}]};
+                                                    dados  = JSON.stringify(r.data);
+                                }
+                                else{
+                                    var dados = "";
+                                            r.data.aulas.push({id:dados_arquivos[0].id,
+                                                chamada:dados_arquivos[0].chamada,
+                                                nome:dados_arquivos[0].nome,
+                                                nome_turma: dados_arquivos[0].nome_turma,
+                                                presensa:"presente"});
+                                                dados  = JSON.stringify(r.data);
+                                }
+                                servico.update({aulas:dados},function(r){
                                    
-                                 
-                                     var parse_data = JSON.parse(data);
-                                     var ultimo = parse_data.aulas.length-1;
-                                        if(ultimo==0){
-                                            parse_data.aulas[ultimo].id = dados_arquivos[0].id;
-                                            parse_data.aulas[ultimo].chamada = dados_arquivos[0].chamada;
-                                            parse_data.aulas[ultimo].nome = dados_arquivos[0].nome;
-                                            parse_data.aulas[ultimo].nome_turma = dados_arquivos[0].nome_turma;
-                                            parse_data.aulas[ultimo].presensa = "presente";
-                                            var dados  = parse_data.aulas[ultimo];
-                                            var organizar ="{"
-                                            +"id"+":"+dados.id+","+
-                                            "chamada"+":"+dados.chamada+","+"nome"+":"+dados.nome+","+
-                                            "nome_turma"+":"+dados.nome_turma+","+"presensa"+":"+dados.presensa+"}";
-                                            var reg = new RegExp("b/g");
-                                            var converte = organizar.replace(reg, '');
-                                            servico.query({"aulas[0].id":0},function(r){
-                                                console.log(r);
-                                            })
-                                            // servico.update(converte,function(data){
-                                            //     console.log("modificado");
-                                            // })
-                                        }
-                                        else{
-
-                                        }
                                 })
-                                
-                                   
-                                    //     data.push("id","nome");
-                                    //     console.log(data);
-                                    //     var dados = JSON.stringify(data);
-                                    //     // resp.$save(dados.aulas,resp=>{
-                                    //     //     console.log(resp);
-                                    // }else{
-                                    //     while(i>=0){
-                                    //         data.push({
-                                    //           id:dados_arquivos[i].id
-                                    //         })
-                                    //       i--;
-                                    //     }
-                                    // }
-                                    
-                                   
-                                 
-                                  // this.http.post(url,)
-                                // this.http.get(url).then(ler=>{
-                                //     var alertar;
-                                //    var visulizar = JSON.stringify(ler.data[0],(key,valor)=>{
-                                //     alertar = [valor.aulas];                                  
-                                //        console.log(valor)
-                                //    });//receber dados
-                                //    alertar[0].index = {id:dados_arquivos[0].id,
-                                //     nome:dados_arquivos[0].nome
-                                //     };
-
-                                   //response(alertar[0]);
-                               // })
+                                this.enviar.delete();
+                            });
                                 
                             break;
                             case "Segunda_turma_da_primeira_modulo":
-                                var json =  this.enviar.select();
-                                var url = "http://"+string +":8080"+lista_caminhos[1];
-                                this.http.post(url,json).then(resp=>{
-                                    console.log(resp)
-                                    this.enviar.delete();
-                                },erro=>{
-                                    this.enviar.delete(); 
+                                var dados_arquivos =  JSON.parse(this.enviar.select());
+                                var url = string +lista_caminhos[1]+"/:aulas";
+                                var servico = this.resource(url,{aulas:"@aulas"},{
+                                    remove: {method:'DELETE'},
+                                    get: { method: "GET",params:{aulas:"@aulas"}},
+                                    update:{method:"Put",params:{aulas:"@aulas"}}
+                                });
+                                this.get(url).then(r=>{
+                                    console.log(r);
+                                    var numero = r.data.length;
+                                    if(numero == 0){
+                                            var dados = "";
+                                           
+                                                r.data = {aulas:[{id:dados_arquivos[0].id,
+                                                    chamada:dados_arquivos[0].chamada,
+                                                    nome:dados_arquivos[0].nome,
+                                                    nome_turma: dados_arquivos[0].nome_turma,
+                                                    presensa:"presente"}]};
+                                                    dados  = JSON.stringify(r.data);
+                                }
+                                else{
+                                    var dados = "";
+                                            r.data.aulas.push({id:dados_arquivos[0].id,
+                                                chamada:dados_arquivos[0].chamada,
+                                                nome:dados_arquivos[0].nome,
+                                                nome_turma: dados_arquivos[0].nome_turma,
+                                                presensa:"presente"});
+                                                dados  = JSON.stringify(r.data);
+                                }
+                                servico.update({aulas:dados},function(r){
+                                   
                                 })
+                                this.enviar.delete();
+                            });
                             break;
                             case "Primeira_turma_da_segunda_modulo":
-                                var json =  this.enviar.select();
-                                var url = "http://"+string + ":8080"+lista_caminhos[2];
-                                this.http.post(url,json).then(resp=>{
-                                    this.enviar.delete();
-                                },erro=>{
-                                    this.enviar.delete(); 
+                                var dados_arquivos =  JSON.parse(this.enviar.select());
+                                var url = string +lista_caminhos[2]+"/:aulas";
+                                var servico = this.resource(url,{aulas:"@aulas"},{
+                                    remove: {method:'DELETE'},
+                                    get: { method: "GET",params:{aulas:"@aulas"}},
+                                    update:{method:"Put",params:{aulas:"@aulas"}}
+                                });
+                                this.get(url).then(r=>{
+                                    console.log(r);
+                                    var numero = r.data.length;
+                                    if(numero == 0){
+                                            var dados = "";
+                                           
+                                                r.data = {aulas:[{id:dados_arquivos[0].id,
+                                                    chamada:dados_arquivos[0].chamada,
+                                                    nome:dados_arquivos[0].nome,
+                                                    nome_turma: dados_arquivos[0].nome_turma,
+                                                    presensa:"presente"}]};
+                                                    dados  = JSON.stringify(r.data);
+                                }
+                                else{
+                                    var dados = "";
+                                            r.data.aulas.push({id:dados_arquivos[0].id,
+                                                chamada:dados_arquivos[0].chamada,
+                                                nome:dados_arquivos[0].nome,
+                                                nome_turma: dados_arquivos[0].nome_turma,
+                                                presensa:"presente"});
+                                                dados  = JSON.stringify(r.data);
+                                }
+                                servico.update({aulas:dados},function(r){
+                                   
                                 })
+                                this.enviar.delete();
+                            });
                             break;
                         }
                   
@@ -166,7 +180,6 @@ class  pegar_json{
                  this.enviar.delete();
             }
             
-        })
    
     
     }
@@ -180,13 +193,8 @@ enivio_alasql.factory("http_alasql",function($http,$resource){
         try
         {
             string = "http://"+string +":8080";
-                dados.post_dados(tipo_turma,string).then(r=>
-                    {
-                    console.log(r);
-                   // dados.http.post()
-                },error=>{
-                dados.enviar.delete();
-                })
+                dados.post_dados(tipo_turma,string);
+                   
         }catch(erro){
             dados.enviar.delete();
         }
