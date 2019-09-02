@@ -103,7 +103,7 @@ class criptografia_rsa{
         var c = 0;
         var x = 0;
         var b = 0;
-        c = Math.floor(Math.random() *100);
+        c = Math.floor(Math.random() *101);
         b = this.fatorial_primo(c);
                 for(var i = 1;i<=b;i++){
                     if(this.Divisaoexata(b,i)){
