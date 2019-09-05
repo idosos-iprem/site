@@ -67,7 +67,6 @@ class criptografia_rsa{
                     }
                         response(array);
                     },error=>{
-                        console.log(error);
                         console.log("erro");
                     });
             })
