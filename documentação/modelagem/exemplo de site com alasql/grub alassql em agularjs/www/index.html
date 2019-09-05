@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="grub" ng-controller="portal">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.8/angular-resource.js"></script>
@@ -21,8 +20,8 @@
             <input type="text" ng-model="login"/></br>
             <label>Senha</label>
             <input type="password" ng-model="senha" /></br>
-            <input type="submit" ng-click="enviar(login,senha)"  value="Entrar"/>
-     
+            <input type="submit" ng-disabled="disabled"  ng-click="enviar(login,senha)"value="Entrar"/>
+            <span>{{alerta}}</span>
     
     
 

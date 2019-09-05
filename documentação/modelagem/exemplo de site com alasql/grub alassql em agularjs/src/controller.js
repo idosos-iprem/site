@@ -1,5 +1,7 @@
 var app = angular.module("grub",["servico","enviar","acesso","rsa",])
-
+app.run(function($http){
+    $http.defaults.headers.common.Authorization = "Access-Control-Allow-Origin: *";
+})
 app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
     $scope.insert = function(nome,chamada,modulo){
 
@@ -38,9 +40,20 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
 
 });
 app.controller("portal",function($scope,dados,criptografia){
+    $scope.disabled = false;
+    $scope.count = 1;
 $scope.enviar = function(x,y){
     var s = dados.ip(1,0);
-   criptografia.validar(s,x,y);
-   
+     var erro = criptografia.validar(s,x,y)
+
+    if($scope.count ==3){
+        $scope.disabled =true;
+        $scope.alerta = "Atulize-se a pagina novamente";
+    } 
+    else{
+        $scope.count++;
+        $scope.alerta = "Login ou senha invalidos"; 
+
+    } 
 }
 })

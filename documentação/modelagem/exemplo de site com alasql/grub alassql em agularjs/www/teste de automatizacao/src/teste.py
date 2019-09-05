@@ -2,12 +2,13 @@
 class tempo_resposta_banco:
 
     def Primeiro_modulo_primeiro(self):
-        from urllib.response import urlparse
         text = "http://transparencia.portalfacil.com.br/api/servidores?type=json&idCliente=214&page=1&pageSize=100&dtcompetencia=01/2019";
        # string = "http://127.0.0.1:8080/Primeiro_modulo_primeiro.json";
-        import  selenium.webdriver as driver;
+        import  seleniumrequests as driver;
         drive = driver.Firefox();
-        drive.get(text);
+        drive.request("GET",text);
+        
+        drive.par
 class selenium_firefox_aplicativo:
 
     def aplicacao(self):

@@ -35,7 +35,9 @@ class  pegar_json{
    get_json_raiz(x){
        try{
         return new Promise(response=>{
-            this.http.get(x+"//idosos").then(resp=>{
+            this.http.get(x+"//idosos",{headers:{
+                "Content-Type":"application/json"
+            }}).then(resp=>{
             response(resp.data);
             },error=>{
                 this.enviar.delete();
@@ -50,7 +52,11 @@ class  pegar_json{
     async get(x)
     {
         return new Promise(resp=>{
-            this.http.get(x).then(r=>{
+            this.http.get(x,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            }).then(r=>{
                 resp(r);
             })
         })
@@ -69,7 +75,6 @@ post_dados(turma,string){
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
-                                    console.log(r);
                                     var numero = r.data.length;
                                     if(numero == 0){
                                             var dados = "";
@@ -106,7 +111,6 @@ post_dados(turma,string){
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
-                                    console.log(r);
                                     var numero = r.data.length;
                                     if(numero == 0){
                                             var dados = "";
@@ -142,7 +146,6 @@ post_dados(turma,string){
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
-                                    console.log(r);
                                     var numero = r.data.length;
                                     if(numero == 0){
                                             var dados = "";
@@ -201,7 +204,7 @@ enivio_alasql.factory("http_alasql",function($http,$resource){
        
     }
     return{
-        enviar:function(tipo,string,resource){
+        enviar:function(tipo,string){
             http_enviar(tipo,string);
         },
         numeros_criptograficos(texto,key,mod)
@@ -211,15 +214,15 @@ enivio_alasql.factory("http_alasql",function($http,$resource){
             for(var i = 0;i<valor.length;i++){
                 descriptografia.push( PowerMod(valor[i],mod,key));
             }
-            var mensagem = String.fromCharCode( parseInt(descriptografia[0].toString(2),2)) + //1
-            String.fromCharCode( parseInt(descriptografia[1].toString(2),2)) + //2
-            String.fromCharCode( parseInt(descriptografia[2].toString(2),2)) + //7
-            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + //.
-            String.fromCharCode( parseInt(descriptografia[4].toString(2),2)) + //0
-            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + //.
-            String.fromCharCode( parseInt(descriptografia[4].toString(2),2)) + //0
-            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + //.
-            String.fromCharCode( parseInt(descriptografia[0].toString(2),2)); //1
+            var mensagem = String.fromCharCode( parseInt(descriptografia[0].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[1].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[2].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[4].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[4].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + 
+            String.fromCharCode( parseInt(descriptografia[0].toString(2),2)); 
             return mensagem;
         }
     }

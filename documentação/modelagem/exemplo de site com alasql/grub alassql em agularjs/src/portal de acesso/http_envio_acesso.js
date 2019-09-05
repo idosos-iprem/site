@@ -50,7 +50,11 @@ class criptografia_rsa{
                             cinco: PowerMod(texto.cinco,e,n)
                         })
                 var urls = "http://"+mensagem+":"+8080+"//pessoas";
-                this.http.get(urls).then(resp=>{
+                this.http.get(urls,{
+                    headers:{
+                        "Content-Type":"application/json"
+                    }
+                }).then(resp=>{
                     var s = {};
                     var array = [{}];
                     for(var i =0;i<resp.data.pessoas.length;i++){
@@ -64,9 +68,11 @@ class criptografia_rsa{
                         response(array);
                     },error=>{
                         console.log(error);
+                        console.log("erro");
                     });
             })
         }catch(e){
+            onsole.log("erro");
             window.close();
         }
     }
@@ -157,7 +163,7 @@ servico.factory("criptografia",function($http,$window){
             $window.location.replace(caminho);
          }
        },error=>{
-        console.log(error);
+        console.log("erro");
        })
     }
     return {
