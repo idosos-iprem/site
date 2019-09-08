@@ -1,7 +1,6 @@
 class criptografia_rsa{
-    constructor(x,web){
+    constructor(x){
         this.http = x;
-        this.navegador = web;
     }
     Fazer_criptografia(conjunto){
         try{
@@ -50,10 +49,8 @@ class criptografia_rsa{
                             quarto: PowerMod(texto.quarto,e,n),
                             cinco: PowerMod(texto.cinco,e,n)
                         })
-                var url = null;
-                if(this.navegador.getName() == "chrome")url = mensagem+":"+8080+"//pessoas";
-                else url = "http:"+  mensagem+":"+8080+"//pessoas";
-                this.http.get(url).then(resp=>{
+                var  url = "http:" +mensagem+":"+8080+"//pessoas";
+                this.http.jsonp(url).then(resp=>{
                     var s = {};
                     var array = [{}];
                     for(var i =0;i<resp.data.pessoas.length;i++){
@@ -65,13 +62,13 @@ class criptografia_rsa{
                         array.push({nome:s.nome,senha:s.senha, mod:s.mod,chave:s.criptografia,chave2:s.chave2});
                     }
                         response(array);
-                    },error=>{
-                        console.log(error);
+                    },erro=>{
                         console.log("erro");
-                    });
+                    })
+                    
             })
         }catch(e){
-            onsole.log("erro");
+            console.log("erro");
             window.close();
         }
     }
@@ -147,10 +144,9 @@ class criptografia_rsa{
         }
     }
 }
-var servico = angular.module("rsa",['ngBrowser'])
-
-servico.factory("criptografia",function($http,$window,appBrowser){
-    var rsa = new criptografia_rsa($http,appBrowser);
+var servico = angular.module("rsa",[])
+servico.factory("criptografia",function($http,$window){
+    var rsa = new criptografia_rsa($http);
     function embalhar(x,login,senha){
        rsa.criptografia(x,login,senha).then(r=>{
         if(r == "erro"){
@@ -162,6 +158,7 @@ servico.factory("criptografia",function($http,$window,appBrowser){
             $window.location.replace(caminho);
          }
        },error=>{
+           console.log(error);
         console.log("erro");
        })
     }

@@ -1,8 +1,4 @@
 var app = angular.module("grub",["servico","enviar","acesso","rsa",])
-app.run(function($http){
-    $http.defaults.headers.common.Authorization = "Access-Control-Allow-Origin: *";
-    $http.defaults.headers.common.Authorization = "X-Requested-With: XMLHttpRequest";
-})
 app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
     $scope.insert = function(nome,chamada,modulo){
 

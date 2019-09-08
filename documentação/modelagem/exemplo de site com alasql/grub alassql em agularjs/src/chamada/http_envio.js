@@ -35,7 +35,7 @@ class  pegar_json{
    get_json_raiz(x){
        try{
         return new Promise(response=>{
-            this.http.get(x+"//idosos").then(resp=>{
+            this.http.jsonp(x+"//idosos").then(resp=>{
             response(resp.data);
             },error=>{
                 this.enviar.delete();
@@ -50,7 +50,7 @@ class  pegar_json{
     async get(x)
     {
         return new Promise(resp=>{
-            this.http.get(x).then(r=>{
+            this.http.jsonp(x).then(r=>{
                 resp(r);
             })
         })
@@ -183,15 +183,13 @@ post_dados(turma,string){
 
 }
 
-var enivio_alasql = angular.module("enviar",['ngResource','ngBrowser'])
-enivio_alasql.factory("http_alasql",function($http,$resource,appBrowser){
+var enviar_alasql = angular.module("enviar",['ngResource'])
+enviar_alasql.factory("http_alasql",function($http,$resource){
     var dados = new pegar_json($http,$resource);
     function http_enviar(tipo_turma,string){
         try
         {
-            var urls = null;
-            if(appBrowser.getName() == "chrome")urls = string + ":"+8080;
-            else urls = "http:" +string +":"+ 8080;
+            var urls = "http:"+string + ":"+8080;
                 dados.post_dados(tipo_turma,urls);
                    
         }catch(erro){
