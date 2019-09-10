@@ -4,7 +4,7 @@ class alasqlprograma{
        alasql("Create table if not exists teste2(id number , nome string,  chamada string, nome_turma string);");
     }
     insert(nome,chamada, nome_turmas){
-        const id  = 1;
+        const id  = Math.floor(Math.random()*10001);
         var insert = "insert into teste2 values(";
         var valores = insert + id +','+'"'+nome + '"'+','
         var resultado =  valores + '"'+chamada +'"'+','+'"'+nome_turmas+'"'+');';

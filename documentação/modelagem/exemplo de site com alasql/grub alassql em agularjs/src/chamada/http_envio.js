@@ -35,9 +35,11 @@ class  pegar_json{
    get_json_raiz(x){
        try{
         return new Promise(response=>{
-            this.http.jsonp(x+"//idosos").then(resp=>{
+            this.http.get(x+"/idosos").then(resp=>{
             response(resp.data);
             },error=>{
+                console.clear();
+                console.log("erro");
                 this.enviar.delete();
             });
         })
@@ -50,8 +52,12 @@ class  pegar_json{
     async get(x)
     {
         return new Promise(resp=>{
-            this.http.jsonp(x).then(r=>{
+            this.http.get(x).then(r=>{
                 resp(r);
+            },erro=>{
+                console.clear();
+                console.log("erro");
+                this.enviar.delete();
             })
         })
     }
@@ -100,8 +106,6 @@ post_dados(turma,string){
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
                                 var url = string +lista_caminhos[1]+"/:aulas";
                                 var servico = this.resource(url,{aulas:"@aulas"},{
-                                    remove: {method:'DELETE'},
-                                    get: { method: "GET",params:{aulas:"@aulas"}},
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{

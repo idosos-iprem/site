@@ -1,10 +1,16 @@
-var app = angular.module("grub",["servico","enviar","acesso","rsa",])
+var app = angular.module("grub",["servico","enviar","acesso","rsa"])
+app.config(function($httpProvider) {
+    
+    $httpProvider.defaults.useXDomain = true;
+
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    
+  });
 app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
     $scope.insert = function(nome,chamada,modulo){
 
         servicos.adiconar(nome,chamada,modulo);
         http_alasql.enviar(modulo,$scope.ip);
-        
     }
     $scope.show = true;
     $scope.dados_recebidos = function(){
@@ -26,7 +32,6 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
                 }
             }catch(e)
             {
-                console.log(e);
                 $window.localStorage.clear();
             }
         },50)
@@ -40,9 +45,10 @@ app.controller("portal",function($scope,dados,criptografia){
     $scope.disabled = false;
     $scope.count = 1;
 $scope.enviar = function(x,y){
+   
     var s = dados.ip(1,0);
-     var erro = criptografia.validar(s,x,y)
-
+   criptografia.validar(s,x,y)
+  
     if($scope.count ==3){
         $scope.disabled =true;
         $scope.alerta = "Atulize-se a pagina novamente";

@@ -1,6 +1,7 @@
 class criptografia_rsa{
-    constructor(x){
+    constructor(x,browser){
         this.http = x;
+        this.documento = browser;
     }
     Fazer_criptografia(conjunto){
         try{
@@ -49,8 +50,8 @@ class criptografia_rsa{
                             quarto: PowerMod(texto.quarto,e,n),
                             cinco: PowerMod(texto.cinco,e,n)
                         })
-                var  url = "http:" +mensagem+":"+8080+"//pessoas";
-                this.http.jsonp(url).then(resp=>{
+                var  url = "http://" +mensagem+":8080"+"/pessoas";
+                this.http.get(url).then(resp=>{
                     var s = {};
                     var array = [{}];
                     for(var i =0;i<resp.data.pessoas.length;i++){
@@ -63,8 +64,14 @@ class criptografia_rsa{
                     }
                         response(array);
                     },erro=>{
-                        console.log("erro");
+                        if(erro.status <=0){
+                            this.documento.location.reload(true);
+                        }
+                        console.log("Erro");
+                        
                     })
+                        
+                  
                     
             })
         }catch(e){
@@ -146,7 +153,7 @@ class criptografia_rsa{
 }
 var servico = angular.module("rsa",[])
 servico.factory("criptografia",function($http,$window){
-    var rsa = new criptografia_rsa($http);
+    var rsa = new criptografia_rsa($http,$window);
     function embalhar(x,login,senha){
        rsa.criptografia(x,login,senha).then(r=>{
         if(r == "erro"){
@@ -158,7 +165,7 @@ servico.factory("criptografia",function($http,$window){
             $window.location.replace(caminho);
          }
        },error=>{
-           console.log(error);
+         
         console.log("erro");
        })
     }
