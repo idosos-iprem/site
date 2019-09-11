@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="grub" ng-controller="portal">
 <head>
+        <link href="../css/estilo.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8" >
     <meta content="application/json X-Content-Type-Options: nosniff" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
@@ -16,12 +17,13 @@
     <script src="../src/portal de acesso/http_envio_acesso.js"></script>
 </head>
 <body >
- 
-            <label> login</label>
-            <input type="text" ng-model="login"/></br>
-            <label>Senha</label>
-            <input type="password" ng-model="senha" /></br>
-            <input type="submit" ng-disabled="disabled" ng-model="botao"  ng-click="enviar(login,senha)" value="Entrar"/>
+            <img src="../imagens/iprem.PNG"/></br>
+            <div class="inputs">
+                    <input type="text" ng-model="login" /></br>
+                    <input type="password" ng-model="senha" /></br>
+                    
+            </div>
+                    <input type="submit" ng-disabled="disabled" ng-model="botao"  ng-click="enviar(login,senha)" value="Entrar"/>
             <span>{{alerta}}</span>
     
 
