@@ -61,7 +61,7 @@ class  pegar_json{
             })
         })
     }
-post_dados(turma,string){
+post_dados(turma,string,dia){
                 try{
                 this.get_json_raiz(string).then(resp=>{
                     var lista_caminhos = resp.lista;
@@ -70,8 +70,6 @@ post_dados(turma,string){
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
                                 var url = string +lista_caminhos[0]+"/:aulas";
                                 var servico = this.resource(url,{aulas:"@aulas"},{
-                                    remove: {method:'DELETE'},
-                                    get: { method: "GET",params:{aulas:"@aulas"}},
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
@@ -83,7 +81,8 @@ post_dados(turma,string){
                                                     chamada:dados_arquivos[0].chamada,
                                                     nome:dados_arquivos[0].nome,
                                                     nome_turma: dados_arquivos[0].nome_turma,
-                                                    presensa:"presente"}]};
+                                                    presensa:"presente",
+                                                    datatime:dia}]};
                                                     dados  = JSON.stringify(r.data);
                                 }
                                 else{
@@ -92,7 +91,8 @@ post_dados(turma,string){
                                                 chamada:dados_arquivos[0].chamada,
                                                 nome:dados_arquivos[0].nome,
                                                 nome_turma: dados_arquivos[0].nome_turma,
-                                                presensa:"presente"});
+                                                presensa:"presente",
+                                                datatime:dia});
                                                 dados  = JSON.stringify(r.data);
                                 }
                                 servico.update({aulas:dados},function(r){
@@ -117,7 +117,8 @@ post_dados(turma,string){
                                                     chamada:dados_arquivos[0].chamada,
                                                     nome:dados_arquivos[0].nome,
                                                     nome_turma: dados_arquivos[0].nome_turma,
-                                                    presensa:"presente"}]};
+                                                    presensa:"presente",
+                                                    datatime:dia}]};
                                                     dados  = JSON.stringify(r.data);
                                 }
                                 else{
@@ -126,7 +127,8 @@ post_dados(turma,string){
                                                 chamada:dados_arquivos[0].chamada,
                                                 nome:dados_arquivos[0].nome,
                                                 nome_turma: dados_arquivos[0].nome_turma,
-                                                presensa:"presente"});
+                                                presensa:"presente",
+                                                datatime:dia});
                                                 dados  = JSON.stringify(r.data);
                                 }
                                 servico.update({aulas:dados},function(r){
@@ -139,8 +141,6 @@ post_dados(turma,string){
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
                                 var url = string +lista_caminhos[2]+"/:aulas";
                                 var servico = this.resource(url,{aulas:"@aulas"},{
-                                    remove: {method:'DELETE'},
-                                    get: { method: "GET",params:{aulas:"@aulas"}},
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
@@ -152,7 +152,8 @@ post_dados(turma,string){
                                                     chamada:dados_arquivos[0].chamada,
                                                     nome:dados_arquivos[0].nome,
                                                     nome_turma: dados_arquivos[0].nome_turma,
-                                                    presensa:"presente"}]};
+                                                    presensa:"presente",
+                                                datatime:dia}]};
                                                     dados  = JSON.stringify(r.data);
                                 }
                                 else{
@@ -161,7 +162,8 @@ post_dados(turma,string){
                                                 chamada:dados_arquivos[0].chamada,
                                                 nome:dados_arquivos[0].nome,
                                                 nome_turma: dados_arquivos[0].nome_turma,
-                                                presensa:"presente"});
+                                                presensa:"presente",
+                                                datatime:dia});
                                                 dados  = JSON.stringify(r.data);
                                 }
                                 servico.update({aulas:dados},function(r){
@@ -184,26 +186,78 @@ post_dados(turma,string){
    
     
     }
+    excluir(id,data,string){
+        try{
+            this.get_json_raiz(string).then(r=>{
+                var lista_caminhos = r.lista;
+               var i = 0;
+               while(lista_caminhos.length >=i){
+                   var url = lista_caminhos[i];
+                   var servico = this.resource(url,{aulas:"@aulas"},{
+                    remove: {method:'DELETE',params:{aulas:"@aulas"}}
+                });
+                this.get(url).then(resp=>{
+                    for(var c = 0;c<resp.data.aulas.length;c++){
+    
+                            if(resp.data.aulas[c].id == id && resp.data.aulas[c].datatime == data)
+                            {
+                                servico.remove({aulas:resp.data.aulas[c]},function(r){
+    
+                                })
+                                this.enviar.delete();
+                            }
+    
+                    }
+                })
+               }
+            },erro=>{
+                this.enviar.delete();
+            })
+        }
+        catch(e){
+            this.enviar.delete();
+        }
+    }
 
 }
 
-var enviar_alasql = angular.module("enviar",['ngResource'])
-enviar_alasql.factory("http_alasql",function($http,$resource){
+var enviar_alasql = angular.module("enviar",['ngResource','datas'])
+enviar_alasql.factory("http_alasql",function($http,$resource,dia){
     var dados = new pegar_json($http,$resource);
     function http_enviar(tipo_turma,string){
         try
         {
             var urls = "http:"+string + ":"+8080;
-                dados.post_dados(tipo_turma,urls);
+            dia.data().then(resp=>
+                {
+
+                dados.post_dados(tipo_turma,urls,resp);
+            })
+                
                    
         }catch(erro){
             dados.enviar.delete();
         }
        
     }
+    function  http_delete(id,data,string){
+        try{
+            var urls = "http:"+string + ":"+8080;
+            dia.data().then(resp=>
+                {
+
+            dados.excluir(id,resp,urls);
+                });
+        }catch(erro){
+            dados.enviar.delete();
+        }
+    }
     return{
         enviar:function(tipo,string){
             http_enviar(tipo,string);
+        },
+        deletar:function(id,data,string){
+                http_delete(id,data,string);
         },
         numeros_criptograficos(texto,key,mod)
         { 
