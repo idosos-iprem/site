@@ -8,18 +8,38 @@ app.config(function($httpProvider) {
   });
 app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
     $scope.insert = function(nome,chamada,modulo){
-
+       
         servicos.adiconar(nome,chamada,modulo);
         http_alasql.enviar(modulo,$scope.ip);
     }
-    $scope.show = true;
+    $scope.enable_lista = function(){
+        $scope.lista = true;
+        $scope.Adicionar = false;
+        $scope.Pesquisar = false;
+    }
+    $scope.enable_adicionar = function(){
+        $scope.lista = false;
+        $scope.Adicionar = true;
+        $scope.Pesquisar = false;
+        $scope.date = false;
+    }
+    $scope.enable_Pesquisar = function(){
+        $scope.lista = false;
+        $scope.Adicionar = false;
+        $scope.Pesquisar = true;
+        $scope.date = false;
+    }
+    $scope.date = false;
+    $scope.visualizar = function(){
+        $scope.date = true;
+    }
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
             try{
                 var chave =$window.localStorage["chaves"];
                 if(chave == null ||chave == undefined || chave ==""){
                     $window.localStorage.clear();
-                    $scope.show = false;
+                    
                     var caminho = $window.location.href.replace("www/site.html","www/index.html");
                      $window.location.replace(caminho);
                 }

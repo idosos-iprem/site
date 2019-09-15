@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Document</title>
+    <link rel="stylesheet" href="../css/estilo_pagina.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="https://code.angularjs.org/1.7.8/angular-resource.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="../src/rsa.js"></script>
     <script src="../src/controller.js"></script>
     <script  src="../src/chamada/factory.js"></script>
@@ -18,19 +20,65 @@
     <script src="../src/portal de acesso/http_envio_acesso.js"></script>
 </head>
 <body ng-init="dados_recebidos()">
-    <input type="text" ng-model="nome" ng-show="show"/>
-    <select  ng-model="chamada" ng-show="show">
-        <option value="presente">presente</option>
-        <option value="falta">falta</option>
-    </select>
-    <label ng-show="show">Turmas</label>
-    <select ng-model="tipo_turma" ng-show="show">
-        <option>
-                        <option value="Primeira_turma_da_primeira_modulo" >Primeiro horario da primeira turma </option>
-                        <option value="Segunda_turma_da_primeira_modulo">Segunda horario da primeira turma</option>
-                        <option value="Primeira_turma_da_segunda_modulo">Primeiro horario da segunda turma</option>
-        </option>
-    </select>
-    <input type="submit" value="insert" ng-click="insert(nome,chamada,tipo_turma)" ng-show="show"/>
+   <header class="cabeçalho"></header>
+   <div class="opções">
+        <a  ng-click="enable_adicionar()" class="aulas">Adicionar aulas</a>
+        <a  ng-click="enable_lista()" class="chamada">Chamada</a>
+    
+        <a  ng-click="enable_Pesquisar()" class="pesquisar">Pesquisar aulas</a>
+        
+    </div>
+    <div class="container">
+            <div class="row">
+                    <div class="col-sm-9" ng-show="lista"  >
+                            <label >Alunos:</label>
+                            <input type="text" ng-model="nome" />
+                            <label >Chamada:</label>
+                            <select  ng-model="chamada" >
+                                <option value="presente">presente</option>
+                                <option value="falta">falta</option>
+                            </select>
+                            <label class="turma">Turmas:</label>
+                            <select ng-model="tipo_turma" >
+                                
+                                                <option value="Primeira_turma_da_primeira_modulo" >Primeiro horario da primeira turma </option>
+                                                <option value="Segunda_turma_da_primeira_modulo">Segunda horario da primeira turma</option>
+                                                <option value="Primeira_turma_da_segunda_modulo">Primeiro horario da segunda turma</option>
+
+                            </select>
+                            <input type="submit" class="adicionar" value="Adicionar" ng-click="insert(nome,chamada,tipo_turma)" />
+                            <input type="submit" class="deletar" value="deletar" ng-click="visualizar()"/>
+                                   
+                          
+                            
+                    </div>
+                   
+                           
+                       
+                    <div class="col-sm-9" ng-show="Adicionar" >
+                            <label >Inicio:</label>
+                            <input type="date"  />
+                            <label >final:</label>
+                            <input type="date"  />
+                            <label >Dias de aulas:</label>
+                            <select>
+                                <option value="segunda-feira">segunda-feira</option>
+                                <option value="Terça-feira">Terça-feira</option>
+                                <option value="Quarta-feira">Quarta-feira</option>
+                                <option value="Quinta-feira">Quinta-feira</option>
+                                <option value="Sexta-feira">Sexta-feira</option>
+                            </select>
+                    </div>
+                    <div class="col-sm-3" ng-show="date">
+                            Escolher data: <input type="date"  />
+                            id:<input type="number" class="numero"/></br>
+                            <input type="submit" value="salvar" class="deletar"/>
+                    </div>
+            </div>
+    </div>
+    <footer class="rodape">
+
+    </footer>
+   
 </body>
 </html>

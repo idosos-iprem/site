@@ -243,11 +243,7 @@ enviar_alasql.factory("http_alasql",function($http,$resource,dia){
     function  http_delete(id,data,string){
         try{
             var urls = "http:"+string + ":"+8080;
-            dia.data().then(resp=>
-                {
-
-            dados.excluir(id,resp,urls);
-                });
+            dados.excluir(id,data,urls);
         }catch(erro){
             dados.enviar.delete();
         }

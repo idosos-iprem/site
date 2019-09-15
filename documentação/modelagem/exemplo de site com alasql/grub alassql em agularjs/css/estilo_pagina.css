@@ -1,0 +1,53 @@
+.opções{
+    margin: 10% 10% 10% 40%;
+}
+.opções .aulas{
+    padding: 3%;
+    cursor: pointer;
+    color: rgb(160, 206, 78);
+
+}
+
+.opções .chamada{
+    padding: 3%;
+    cursor: pointer;
+    color: rgb(160, 206, 78);
+}
+.opções .pesquisar{
+    padding: 3%;
+    cursor: pointer;
+    color: rgb(160, 206, 78);
+}
+.cabeçalho {
+    background-color: rgb(160, 206, 78);
+    padding: 2%;
+
+}
+.rodape{
+    background-color: rgb(160, 206, 78);
+    margin-top:16%;
+    padding: 2%;
+}
+.container .row .col-sm-9{
+   margin-left: 16%;
+}
+.container .row .col-sm-9 .adicionar{
+    background-color: rgb(160, 206, 78);
+    border: 2px solid rgb(160, 206, 78);
+}
+.container .row .col-sm-9 .deletar{
+    background-color: rgb(160, 206, 78);
+    border: 2px solid rgb(160, 206, 78);
+}
+.container .row .col-sm-3 {
+    margin-left: 85%;   
+}
+.container .row .col-sm-3 .numero{
+   margin-left: 30%;
+   width: 152px;
+}
+.container .row .col-sm-3 .deletar{
+    background-color: rgb(160, 206, 78);
+    border: 2px solid rgb(160, 206, 78);
+    margin-left: 73%;
+}
