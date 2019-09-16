@@ -12,6 +12,21 @@ class date{
         });
        
     }
+    option(){
+        // var div  = document.getElementById("lista");
+        //     var select = document.createElement("select");
+        //     var dias = ["segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira"];
+        //     dias.forEach((Value,index,array)=>{
+        //         var opt =document.createElement("option");
+        //         opt.text = Value;
+        //         opt.value = Value;
+        //         select.add(opt,null);
+        //     }) 
+        //     select.id ="dias";
+        //     div.appendChild(select);
+       
+    }
+    
 }
 var datetime = angular.module("datas",[])
 datetime.factory("dia",function($http){
@@ -19,6 +34,10 @@ datetime.factory("dia",function($http){
     return {
         data:function(){
            return dias.datetime();
+        },
+        criar_elenentos:function(){
+            return dias.option();
         }
+        
     }
 })

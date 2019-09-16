@@ -1,4 +1,4 @@
-var app = angular.module("grub",["servico","enviar","acesso","rsa"])
+var app = angular.module("grub",["servico","enviar","acesso","rsa","datas"])
 app.config(function($httpProvider) {
     
     $httpProvider.defaults.useXDomain = true;
@@ -6,7 +6,7 @@ app.config(function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     
   });
-app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
+app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia){
     $scope.insert = function(nome,chamada,modulo){
        
         servicos.adiconar(nome,chamada,modulo);
@@ -32,6 +32,12 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout){
     $scope.date = false;
     $scope.visualizar = function(){
         $scope.date = true;
+    }
+    $scope.adicionar_elemento = function(){
+        dia.criar_elenentos();
+    }
+    $scope.salvar_inicial_final = function(x){
+
     }
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
