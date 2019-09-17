@@ -5,8 +5,8 @@ class date{
     datetime(){
         return new Promise(Response=>{
             this.http.get("http://worldtimeapi.org/api/timezone/America/Sao_Paulo").then(resp=>{
-                var datas = new Date(resp.data.datetime);
-                var formato = datas.getDay() + "/" + datas.getMonth() + "/ " +datas.getFullYear();
+                var x = new Date(resp.data.datetime);
+                var formato = x.getUTCDate().toString() + "/" +(x.getMonth()+1).toString().padStart(2, '0') + "/" + x.getFullYear().toString();
                 Response(formato);
             })
         });

@@ -109,6 +109,10 @@ servico.factory("servicos",function($http,$resource,http_alasql){
         verificar_data:function(string){
             var urls = "http:"+string + ":"+8080;
            return date_hora.existe_data(urls);
+        },
+        deletar_dados:function(data,id){
+            var formato =  date_hora.tratar_data(data);
+            
         }
     }
 })

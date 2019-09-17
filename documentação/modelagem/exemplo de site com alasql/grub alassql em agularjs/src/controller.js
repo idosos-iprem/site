@@ -46,16 +46,18 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
     $scope.remover_elemento = function(){
         dia.remove_elementos();
     }
-    
+    $scope.deletar_dados = function(data,id){
+        servico.deletar_dados(data,id);
+    }
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
             try{
                 var chave =$window.localStorage["chaves"];
                 if(chave == null ||chave == undefined || chave ==""){
-                    $window.localStorage.clear();
+                    // $window.localStorage.clear();
                     
-                    var caminho = $window.location.href.replace("www/site.html","www/index.html");
-                     $window.location.replace(caminho);
+                    // var caminho = $window.location.href.replace("www/site.html","www/index.html");
+                    //  $window.location.replace(caminho);
                 }
                 else{
                     
