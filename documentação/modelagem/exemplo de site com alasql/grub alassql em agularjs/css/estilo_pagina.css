@@ -54,6 +54,10 @@
     border: 2px solid rgb(160, 206, 78);
     margin-left: 73%;
 }
-.lista{
-    
+#lista{
+    margin-left: auto;
+}
+.container .row .col-sm-9 .salvar_datas{
+    background-color: rgb(160, 206, 78);
+    border: 2px solid rgb(160, 206, 78);
 }

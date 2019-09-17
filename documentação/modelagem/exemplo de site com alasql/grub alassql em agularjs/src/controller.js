@@ -34,11 +34,19 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.date = true;
     }
     $scope.adicionar_elemento = function(){
+        $scope.remover = true;
         dia.criar_elenentos();
     }
-    $scope.salvar_inicial_final = function(x){
-
+    $scope.salvar_inicial_final = function(inical,final){
+        servicos.salvar(inical,final,$scope.ip);
+        $scope.link_adicionar = false;
+        $scope.Adicionar = false;
     }
+    $scope.remover = false;
+    $scope.remover_elemento = function(){
+        dia.remove_elementos();
+    }
+    
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
             try{
@@ -54,7 +62,14 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                     var valores = JSON.parse(chave);
                     $window.localStorage.clear();
                     $scope.ip = http_alasql.numeros_criptograficos(valores.chave,valores.chave2,valores.mod);
-    
+                    servicos.verificar_data($scope.ip).then(p=>{
+                        if(p!= "não existe")
+                        {
+                            $scope.link_adicionar = false;
+                            $scope.Adicionar = false;
+                        }
+                        else $scope.link_adicionar = true;
+                    })
                 }
             }catch(e)
             {

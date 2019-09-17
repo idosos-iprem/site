@@ -11,7 +11,7 @@
             "name": "Launch localhost",
             "url": "http://localhost/index.html",
             "webRoot": "${workspaceFolder}",
-            "file": "${workspaceFolder}/www/site.html"
+            "file": "${workspaceFolder}/www/index.html"
         }
     ]
 }

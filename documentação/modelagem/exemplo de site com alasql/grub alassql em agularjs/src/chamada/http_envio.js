@@ -255,7 +255,7 @@ enviar_alasql.factory("http_alasql",function($http,$resource,dia){
         deletar:function(id,data,string){
                 http_delete(id,data,string);
         },
-        numeros_criptograficos(texto,key,mod)
+        numeros_criptograficos:function(texto,key,mod)
         { 
             var valor = [texto.um,texto.dois,texto.tres,texto.quarto,texto.cinco];
             var descriptografia = [];
@@ -272,6 +272,9 @@ enviar_alasql.factory("http_alasql",function($http,$resource,dia){
             String.fromCharCode( parseInt(descriptografia[3].toString(2),2)) + 
             String.fromCharCode( parseInt(descriptografia[0].toString(2),2)); 
             return mensagem;
+        },
+        classe:function(){
+            return dados;
         }
     }
 })
