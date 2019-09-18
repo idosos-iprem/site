@@ -81,7 +81,6 @@ post_dados(turma,string,dia){
                                                     chamada:dados_arquivos[0].chamada,
                                                     nome:dados_arquivos[0].nome,
                                                     nome_turma: dados_arquivos[0].nome_turma,
-                                                    presensa:"presente",
                                                     datatime:dia}]};
                                                     dados  = JSON.stringify(r.data);
                                 }
@@ -91,7 +90,6 @@ post_dados(turma,string,dia){
                                                 chamada:dados_arquivos[0].chamada,
                                                 nome:dados_arquivos[0].nome,
                                                 nome_turma: dados_arquivos[0].nome_turma,
-                                                presensa:"presente",
                                                 datatime:dia});
                                                 dados  = JSON.stringify(r.data);
                                 }
@@ -117,7 +115,6 @@ post_dados(turma,string,dia){
                                                     chamada:dados_arquivos[0].chamada,
                                                     nome:dados_arquivos[0].nome,
                                                     nome_turma: dados_arquivos[0].nome_turma,
-                                                    presensa:"presente",
                                                     datatime:dia}]};
                                                     dados  = JSON.stringify(r.data);
                                 }
@@ -127,7 +124,6 @@ post_dados(turma,string,dia){
                                                 chamada:dados_arquivos[0].chamada,
                                                 nome:dados_arquivos[0].nome,
                                                 nome_turma: dados_arquivos[0].nome_turma,
-                                                presensa:"presente",
                                                 datatime:dia});
                                                 dados  = JSON.stringify(r.data);
                                 }
@@ -152,7 +148,6 @@ post_dados(turma,string,dia){
                                                     chamada:dados_arquivos[0].chamada,
                                                     nome:dados_arquivos[0].nome,
                                                     nome_turma: dados_arquivos[0].nome_turma,
-                                                    presensa:"presente",
                                                 datatime:dia}]};
                                                     dados  = JSON.stringify(r.data);
                                 }
@@ -162,7 +157,6 @@ post_dados(turma,string,dia){
                                                 chamada:dados_arquivos[0].chamada,
                                                 nome:dados_arquivos[0].nome,
                                                 nome_turma: dados_arquivos[0].nome_turma,
-                                                presensa:"presente",
                                                 datatime:dia});
                                                 dados  = JSON.stringify(r.data);
                                 }

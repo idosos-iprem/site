@@ -18,6 +18,8 @@
     <script src="../src/chamada/http_envio.js"></script>
     <script src="../src/portal de acesso/factory_acesso.js"></script>
     <script src="../src/portal de acesso/http_envio_acesso.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zingchart/2.8.6/zingchart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zingchart-angularjs/1.2.0/zingchart-angularjs.js"></script>
 </head>
 <body ng-init="dados_recebidos()">
    <header class="cabeçalho"></header>
@@ -66,8 +68,10 @@
                             <img src="https://img.icons8.com/material/24/000000/filled-trash.png" ng-click="remover_elemento()" ng-show="remover">
                             <input type="submit" class="salvar_datas" value="salvar"  ng-click="salvar_inicial_final(inicial,final)" />
                     </div>
-                    <div class="col-sm-9" ng-show="Pesquisar" >
-
+                    <div class="col-sm-9" ng-show="Pesquisar"  >
+                        <div zingchart id="chart-1" zc-json="myJson" zc-width="100%" zc-height="568px">
+                                
+                        </div>
                 </div>
                     <div class="col-sm-3" ng-show="date">
                             Escolher data: <input type="date" ng-model="data_informata" /></br>

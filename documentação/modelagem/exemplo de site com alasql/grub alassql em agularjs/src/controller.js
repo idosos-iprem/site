@@ -31,6 +31,23 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.Adicionar = false;
         $scope.Pesquisar = true;
         $scope.date = false;
+        $scope.myJson ={
+            type: "pie",
+            title: {
+            textAlign: 'center',
+            text: "My title"
+            },
+            plot: {
+                slice: 50 
+            },
+            series: [{
+                values: [servicos.exiber_dados($scope.ip,"presente","Primeiro_modulo_primeiro")],
+                text: "Presença da primeira turma do primeiro horario "
+            },{
+                values: [servicos.exiber_dados($scope.ip,"falta","Primeiro_modulo_primeiro")],
+                text: "Falta da primeira turma do primeiro horario"
+            }]
+        }
     }
     $scope.date = false;
     $scope.visualizar = function(){
@@ -61,6 +78,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.escolher_turma = null; 
     }
     $scope.link_adicionar =true;
+    
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
             try{

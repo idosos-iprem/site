@@ -114,6 +114,27 @@ class date_hora_inicial{
             });
         })
     }
+    grafico_pizza(x,y,t){
+        var reposta_exibir = 0;
+        var classe = new this.http_alasql.classe();
+        var i = 0;
+        var resposta = x +"/"+t + ".json";
+       
+            classe.get(resposta).then(res=>{
+                  
+                if(res.data.aulas[i].chamada == y){
+                            reposta_exibir = i + resposta;
+                i++;
+                }
+                    });
+            if(i>0)
+            {
+                return  reposta_exibir;
+            }
+        
+        }
+        
+
 }
 var servico = angular.module("servico",['enviar'])
 servico.factory("servicos",function($http,$resource,http_alasql){
@@ -122,6 +143,7 @@ servico.factory("servicos",function($http,$resource,http_alasql){
     function insert(nome,chamada,modulo_turmas){
         alasql.insert(nome,chamada,modulo_turmas);
     }
+    
     return{
         adiconar:function(nome,chamada, modulo_turmas){
                 insert(nome,chamada,modulo_turmas);
@@ -148,6 +170,21 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                else alert("adicione os dados dos idosos");
            })
           
+        },
+        exiber_dados:function(string,y,turma){
+            var urls = "http:"+string + ":"+8080;
+            var exbir = undefined;
+            date_hora.verificar_se_dados(urls,turma).then(r=>{
+                if(r != "vazio")
+                {
+                exbir = date_hora.grafico_pizza(urls,y,turma);
+                }
+                else alert("adicione os dados dos idosos");
+            })
+           if(exbir != undefined){
+            return exbir;
+           }
+           
         }
     }
 })
