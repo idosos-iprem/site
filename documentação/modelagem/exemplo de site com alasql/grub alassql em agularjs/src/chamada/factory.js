@@ -88,7 +88,32 @@ class date_hora_inicial{
         })
        
     }
-
+    verificar_se_dados(url, v){
+        return new Promise(R=>{
+            var classe =  new this.http_alasql.classe();
+            classe.get_json_raiz(url).then(resp=>{
+                var lista_caminhos = resp.lista;
+                var i = 0;
+               
+                while(lista_caminhos.length >i){
+                    var resposta =lista_caminhos[i];
+                    var r = resposta.replace("/","").replace(".json","");
+                    if(r == v){
+                        var lista =  url+lista_caminhos[i];
+                        classe.get(lista).then(res=>{
+                            if(res.data.aulas ==undefined||res.data.aulas==null){
+                                R("vazio");
+                            }
+                            else R("tem dados");
+                        })
+                    }
+                    
+                    i++;
+                }
+                
+            });
+        })
+    }
 }
 var servico = angular.module("servico",['enviar'])
 servico.factory("servicos",function($http,$resource,http_alasql){
@@ -110,9 +135,19 @@ servico.factory("servicos",function($http,$resource,http_alasql){
             var urls = "http:"+string + ":"+8080;
            return date_hora.existe_data(urls);
         },
-        deletar_dados:function(data,id){
+        deletar_dados:function(data,id,turma,string){
+            var urls = "http:"+string + ":"+8080;
             var formato =  date_hora.tratar_data(data);
-            
+           var excluir = new  http_alasql.classe();
+           date_hora.verificar_se_dados(urls,turma).then(r=>{
+               console.log(r);
+               if(r != "vazio")
+               {
+                excluir.excluir(id,formato,turma,urls);
+               }
+               else alert("adicione os dados dos idosos");
+           })
+          
         }
     }
 })

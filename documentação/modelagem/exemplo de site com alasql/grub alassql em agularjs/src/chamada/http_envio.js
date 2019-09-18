@@ -66,10 +66,10 @@ post_dados(turma,string,dia){
                 this.get_json_raiz(string).then(resp=>{
                     var lista_caminhos = resp.lista;
                         switch(turma){
-                            case "Primeira_turma_da_primeira_modulo":
+                            case "Primeiro_modulo_primeiro":
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
-                                var url = string +lista_caminhos[0]+"/:aulas";
-                                var servico = this.resource(url,{aulas:"@aulas"},{
+                                var url = string +lista_caminhos[0];
+                                var servico = this.resource(url+"/:aulas",{aulas:"@aulas"},{
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
@@ -102,10 +102,10 @@ post_dados(turma,string,dia){
                             });
                                 
                             break;
-                            case "Segunda_turma_da_primeira_modulo":
+                            case "Primeiro_modulo_segundo":
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
-                                var url = string +lista_caminhos[1]+"/:aulas";
-                                var servico = this.resource(url,{aulas:"@aulas"},{
+                                var url = string +lista_caminhos[1];
+                                var servico = this.resource(url+"/:aulas",{aulas:"@aulas"},{
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
@@ -137,10 +137,10 @@ post_dados(turma,string,dia){
                                 this.enviar.delete();
                             });
                             break;
-                            case "Primeira_turma_da_segunda_modulo":
+                            case "segundo_modulo":
                                 var dados_arquivos =  JSON.parse(this.enviar.select());
-                                var url = string +lista_caminhos[2]+"/:aulas";
-                                var servico = this.resource(url,{aulas:"@aulas"},{
+                                var url = string +lista_caminhos[2];
+                                var servico = this.resource(url+"/:aulas",{aulas:"@aulas"},{
                                     update:{method:"Put",params:{aulas:"@aulas"}}
                                 });
                                 this.get(url).then(r=>{
@@ -186,29 +186,43 @@ post_dados(turma,string,dia){
    
     
     }
-    excluir(id,data,string){
+    excluir(id,data,turma,string){
         try{
             this.get_json_raiz(string).then(r=>{
                 var lista_caminhos = r.lista;
                var i = 0;
-               while(lista_caminhos.length >=i){
-                   var url = lista_caminhos[i];
-                   var servico = this.resource(url,{aulas:"@aulas"},{
-                    remove: {method:'DELETE',params:{aulas:"@aulas"}}
-                });
-                this.get(url).then(resp=>{
-                    for(var c = 0;c<resp.data.aulas.length;c++){
-    
-                            if(resp.data.aulas[c].id == id && resp.data.aulas[c].datatime == data)
-                            {
-                                servico.remove({aulas:resp.data.aulas[c]},function(r){
-    
-                                })
-                                this.enviar.delete();
+               var c = 0;
+               while(lista_caminhos.length >i){
+                  
+                var resposta = lista_caminhos[i];
+                var r = resposta.replace("/","").replace(".json","");
+                if(r == turma){
+                    var url = string + lista_caminhos[i];
+                    var servico = this.resource(url+"/:aulas",{aulas:"@aulas"},{
+                     update:{method:"Put",params:{aulas:"@aulas"}}
+                 });
+                    this.get(url).then(resp=>
+                        {
+                            while(resp.data.aulas.length >c){
+                                if(resp.data.aulas[c].id == id && resp.data.aulas[c].datatime == data)
+                                {
+                                    resp.data.aulas.splice(c);
+                                    var dados = JSON.stringify(resp.data);
+                                        servico.update({aulas:dados},function(r){
+                                       
+                                        }) 
+                                    this.enviar.delete();
+                                }
+                               
+                                c++;
                             }
-    
-                    }
-                })
+                           
+                         
+                    })
+                   
+                }
+                i++;
+               
                }
             },erro=>{
                 this.enviar.delete();

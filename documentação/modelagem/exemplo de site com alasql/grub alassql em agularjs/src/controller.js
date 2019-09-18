@@ -11,6 +11,9 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
        
         servicos.adiconar(nome,chamada,modulo);
         http_alasql.enviar(modulo,$scope.ip);
+        $scope.nome = null;
+        $scope.chamada = null;
+        $scope.tipo_turma = null;
     }
     $scope.enable_lista = function(){
         $scope.lista = true;
@@ -32,6 +35,9 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
     $scope.date = false;
     $scope.visualizar = function(){
         $scope.date = true;
+        $scope.data_informata = null;
+        $scope.numero = null;
+        $scope.escolher_turma = null; 
     }
     $scope.adicionar_elemento = function(){
         $scope.remover = true;
@@ -41,23 +47,30 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         servicos.salvar(inical,final,$scope.ip);
         $scope.link_adicionar = false;
         $scope.Adicionar = false;
+        $scope.inicial = null;
+        $scope.final = null;
     }
     $scope.remover = false;
     $scope.remover_elemento = function(){
         dia.remove_elementos();
     }
-    $scope.deletar_dados = function(data,id){
-        servico.deletar_dados(data,id);
+    $scope.deletar = function(data,id,turma){
+        servicos.deletar_dados(data,id,turma,$scope.ip);
+        $scope.data_informata = null;
+        $scope.numero = null;
+        $scope.escolher_turma = null; 
     }
+    $scope.link_adicionar =true;
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
             try{
+                
                 var chave =$window.localStorage["chaves"];
                 if(chave == null ||chave == undefined || chave ==""){
-                    // $window.localStorage.clear();
+                    $window.localStorage.clear();
                     
-                    // var caminho = $window.location.href.replace("www/site.html","www/index.html");
-                    //  $window.location.replace(caminho);
+                    var caminho = $window.location.href.replace("www/site.html","www/index.html");
+                     $window.location.replace(caminho);
                 }
                 else{
                     
@@ -65,13 +78,13 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                     $window.localStorage.clear();
                     $scope.ip = http_alasql.numeros_criptograficos(valores.chave,valores.chave2,valores.mod);
                     servicos.verificar_data($scope.ip).then(p=>{
-                        if(p!= "não existe")
+                        if(p != "não existe")
                         {
-                            $scope.link_adicionar = false;
-                            $scope.Adicionar = false;
+                             document.getElementsByClassName("aulas")[0].remove();
+
                         }
-                        else $scope.link_adicionar = true;
                     })
+                    
                 }
             }catch(e)
             {

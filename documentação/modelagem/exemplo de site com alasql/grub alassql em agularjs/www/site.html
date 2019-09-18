@@ -23,7 +23,7 @@
    <header class="cabeçalho"></header>
    <div class="opções">
         <a  ng-click="enable_adicionar()" ng-show="link_adicionar" class="aulas">Adicionar aulas</a>
-        <a  ng-click="enable_lista()" class="chamada">Chamada</a>
+        <a  ng-click="enable_lista()"  class="chamada">Chamada</a>
     
         <a  ng-click="enable_Pesquisar()" class="pesquisar">Pesquisar aulas</a>
         
@@ -41,9 +41,9 @@
                             <label class="turma">Turmas:</label>
                             <select ng-model="tipo_turma" >
                                 
-                                                <option value="Primeira_turma_da_primeira_modulo" >Primeiro horario da primeira turma </option>
-                                                <option value="Segunda_turma_da_primeira_modulo">Segunda horario da primeira turma</option>
-                                                <option value="Primeira_turma_da_segunda_modulo">Primeiro horario da segunda turma</option>
+                                                <option value="Primeiro_modulo_primeiro" >Primeiro horario da primeira turma </option>
+                                                <option value="Primeiro_modulo_segundo">Segunda horario da primeira turma</option>
+                                                <option value="segundo_modulo">Primeiro horario da segunda turma</option>
 
                             </select>
                             <input type="submit" class="adicionar" value="Adicionar" ng-click="insert(nome,chamada,tipo_turma)" />
@@ -68,11 +68,18 @@
                     </div>
                     <div class="col-sm-9" ng-show="Pesquisar" >
 
-                    </div>
+                </div>
                     <div class="col-sm-3" ng-show="date">
-                            Escolher data: <input type="date" ng-model="data_informata" />
-                            id:<input type="number" class="numero" ng-model="numero"/></br>
-                            <input type="submit" value="salvar" class="deletar" ng-click="deletar_dados(data_informata,numero)" />
+                            Escolher data: <input type="date" ng-model="data_informata" /></br>
+                            id:<input type="number" class="numero" ng-model="numero"/>
+                            Turmas:
+                            <select ng-model="escolher_turma" >
+                                <option value="Primeiro_modulo_primeiro" >Primeiro horario da primeira turma </option>
+                                <option value="Primeiro_modulo_segundo">Segunda horario da primeira turma</option>
+                                <option value="segundo_modulo">Primeiro horario da segunda turma</option>
+                           </select></br>
+                           
+                            <input type="submit" value="salvar" class="deletar" ng-click="deletar(data_informata,numero,escolher_turma)" />
                     </div>
                     
 

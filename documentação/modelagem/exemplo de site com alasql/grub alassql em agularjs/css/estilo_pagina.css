@@ -43,7 +43,7 @@
     border: 2px solid rgb(160, 206, 78);
 }
 .container .row .col-sm-3 {
-    margin-left: 85%;   
+    margin-left: 80%;   
 }
 .container .row .col-sm-3 .numero{
    margin-left: 30%;
@@ -60,4 +60,8 @@
 .container .row .col-sm-9 .salvar_datas{
     background-color: rgb(160, 206, 78);
     border: 2px solid rgb(160, 206, 78);
+}
+.container .row .col-sm-3 select{
+width: 58%;
+margin-left: 15%;  
 }
