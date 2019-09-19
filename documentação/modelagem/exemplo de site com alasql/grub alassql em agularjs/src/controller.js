@@ -26,29 +26,101 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.Pesquisar = false;
         $scope.date = false;
     }
+    $scope.mostra_grafico = function(){
+      
+    }
     $scope.enable_Pesquisar = function(){
         $scope.lista = false;
         $scope.Adicionar = false;
         $scope.Pesquisar = true;
         $scope.date = false;
-        $scope.myJson ={
-            type: "pie",
-            title: {
-            textAlign: 'center',
-            text: "My title"
-            },
-            plot: {
-                slice: 50 
-            },
-            series: [{
-                values: [servicos.exiber_dados($scope.ip,"presente","Primeiro_modulo_primeiro")],
-                text: "Presença da primeira turma do primeiro horario "
-            },{
-                values: [servicos.exiber_dados($scope.ip,"falta","Primeiro_modulo_primeiro")],
-                text: "Falta da primeira turma do primeiro horario"
-            }]
+        servicos.exiber_dados($scope.ip,"Primeiro_modulo_primeiro").then(r=>{
+            var presente  = r.presente;
+            var falta = r.falta;
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    label: ["Primeiro_modulo_primeiro"],
+                    datasets: [{
+                        data: [
+                            presente,
+                            falta
+                        ],
+                        backgroundColor: [
+                            window.chartColors.blue,
+                            window.chartColors.red
+                        ],
+                       }],
+                        labels:["presente","falta"]},
+                options: {
+                            title:{
+                                display: true,
+                                text:"Primeiro_modulo_primeiro",
+                                 position: 'top'
+                            }
+                        }
+                     
+                })
+            })
+            servicos.exiber_dados($scope.ip,"Primeiro_modulo_segundo").then(r=>{
+                var presente  = r.presente;
+                var falta = r.falta;
+                var ctx = document.getElementById('myChart2').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        label: ["Primeiro_modulo_segundo"],
+                        datasets: [{
+                            data: [
+                                presente,
+                                falta
+                            ],
+                            backgroundColor: [
+                                window.chartColors.blue,
+                                window.chartColors.red
+                            ],
+                           }],
+                            labels:["presente","falta"]},
+                    options: {
+                                title:{
+                                    text:"Primeiro_modulo_segundo",
+                                     position: 'top'
+                                }
+                            }
+                         
+                    })
+                })
+                servicos.exiber_dados($scope.ip,"segundo_modulo").then(r=>{
+                    var presente  = r.presente;
+                    var falta = r.falta;
+                    var ctx = document.getElementById('myChart3').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            label: ["segundo_modulo"],
+                            datasets: [{
+                                data: [
+                                    presente,
+                                    falta
+                                ],
+                                backgroundColor: [
+                                    window.chartColors.blue,
+                                    window.chartColors.red
+                                ],
+                               }],
+                                labels:["presente","falta"]},
+                        options: {
+                                    title:{
+                                        text:"segundo_modulo",
+                                         position: 'top'
+                                    }
+                                }
+                             
+                        })
+                    })
         }
-    }
+
     $scope.date = false;
     $scope.visualizar = function(){
         $scope.date = true;

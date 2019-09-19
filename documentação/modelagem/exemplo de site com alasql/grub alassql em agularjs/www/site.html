@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Document</title>
     <link rel="stylesheet" href="../css/estilo_pagina.css">
+    <script src="../css/utlil.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="https://code.angularjs.org/1.7.8/angular-resource.js"></script>
@@ -18,8 +19,7 @@
     <script src="../src/chamada/http_envio.js"></script>
     <script src="../src/portal de acesso/factory_acesso.js"></script>
     <script src="../src/portal de acesso/http_envio_acesso.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zingchart/2.8.6/zingchart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zingchart-angularjs/1.2.0/zingchart-angularjs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 </head>
 <body ng-init="dados_recebidos()">
    <header class="cabeçalho"></header>
@@ -27,7 +27,7 @@
         <a  ng-click="enable_adicionar()" ng-show="link_adicionar" class="aulas">Adicionar aulas</a>
         <a  ng-click="enable_lista()"  class="chamada">Chamada</a>
     
-        <a  ng-click="enable_Pesquisar()" class="pesquisar">Pesquisar aulas</a>
+        <a  ng-click="enable_Pesquisar()" class="pesquisar" >Pesquisar aulas</a>
         
     </div>
     <div class="container">
@@ -67,12 +67,14 @@
                             <img src="https://img.icons8.com/windows/24/000000/plus.png" ng-click="adicionar_elemento()">
                             <img src="https://img.icons8.com/material/24/000000/filled-trash.png" ng-click="remover_elemento()" ng-show="remover">
                             <input type="submit" class="salvar_datas" value="salvar"  ng-click="salvar_inicial_final(inicial,final)" />
-                    </div>
-                    <div class="col-sm-9" ng-show="Pesquisar"  >
-                        <div zingchart id="chart-1" zc-json="myJson" zc-width="100%" zc-height="568px">
+                    </div>  
+                    
+                                <canvas ng-show="Pesquisar" id="myChart" width="1600" height="400"></canvas>
+                                <canvas  ng-show="Pesquisar"  id="myChart2" width="1600" height="200"></canvas>
+                                <canvas  ng-show="Pesquisar"  id="myChart3" width="1600" height="200"></canvas>
+
                                 
-                        </div>
-                </div>
+
                     <div class="col-sm-3" ng-show="date">
                             Escolher data: <input type="date" ng-model="data_informata" /></br>
                             id:<input type="number" class="numero" ng-model="numero"/>

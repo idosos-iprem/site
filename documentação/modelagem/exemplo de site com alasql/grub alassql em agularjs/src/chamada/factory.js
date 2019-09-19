@@ -19,7 +19,7 @@ class date_hora_inicial{
         this.http = a;
         this.resource = x;
         this.http_alasql = y
-        
+        this.dados_grafico = null;
     }
     salvar_date(i,f, urls){
         var inicial = this.tratar_data(i);
@@ -114,25 +114,35 @@ class date_hora_inicial{
             });
         })
     }
-    grafico_pizza(x,y,t){
-        var reposta_exibir = 0;
+    grafico_pizza(x,t){
+        var presente_exibir = 0;
+        var falta_exibir = 0;
         var classe = new this.http_alasql.classe();
-        var i = 0;
         var resposta = x +"/"+t + ".json";
-       
+        return new Promise(resp=>{
             classe.get(resposta).then(res=>{
                   
-                if(res.data.aulas[i].chamada == y){
-                            reposta_exibir = i + resposta;
-                i++;
-                }
+                res.data.aulas.forEach((value,index,array)=>{
+                    if(value.chamada == "falta"){
+                        falta_exibir  = index +1;
+                        
+                    }
+                    if(value.chamada == "presente"){
+                        presente_exibir = index +1;
+                    }
+                    if(array.length -1 == index){
+                        var array = {
+                            falta:falta_exibir,
+                            presente:presente_exibir
+                        }
+                        resp(array);
+                    }
+                })
+                
                     });
-            if(i>0)
-            {
-                return  reposta_exibir;
-            }
-        
-        }
+
+        });
+    }
         
 
 }
@@ -143,7 +153,6 @@ servico.factory("servicos",function($http,$resource,http_alasql){
     function insert(nome,chamada,modulo_turmas){
         alasql.insert(nome,chamada,modulo_turmas);
     }
-    
     return{
         adiconar:function(nome,chamada, modulo_turmas){
                 insert(nome,chamada,modulo_turmas);
@@ -171,20 +180,20 @@ servico.factory("servicos",function($http,$resource,http_alasql){
            })
           
         },
-        exiber_dados:function(string,y,turma){
-            var urls = "http:"+string + ":"+8080;
-            var exbir = undefined;
-            date_hora.verificar_se_dados(urls,turma).then(r=>{
-                if(r != "vazio")
-                {
-                exbir = date_hora.grafico_pizza(urls,y,turma);
-                }
-                else alert("adicione os dados dos idosos");
-            })
-           if(exbir != undefined){
-            return exbir;
-           }
-           
-        }
+        exiber_dados:function(string,turma){
+                var urls = "http:"+string + ":"+8080;
+                    return new Promise(p=>{
+                        date_hora.verificar_se_dados(urls,turma).then(r=>{
+                            if(r != "vazio")
+                            {
+                               date_hora.grafico_pizza(urls,turma).then(s=>{
+                                p(s);
+                               })
+                                
+                            }
+                            else alert("adicione os dados dos idosos");
+                        })
+                    })     
     }
+}
 })
