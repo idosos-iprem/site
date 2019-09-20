@@ -58,9 +58,9 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                                 display: true,
                                 text:"Primeiro_modulo_primeiro",
                                  position: 'top'
-                            }
+                            },
+                            responsive:true
                         }
-                     
                 })
             })
             servicos.exiber_dados($scope.ip,"Primeiro_modulo_segundo").then(r=>{
@@ -84,9 +84,11 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                             labels:["presente","falta"]},
                     options: {
                                 title:{
+                                    display: true,
                                     text:"Primeiro_modulo_segundo",
                                      position: 'top'
-                                }
+                                },
+                                responsive:true
                             }
                          
                     })
@@ -112,9 +114,11 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                                 labels:["presente","falta"]},
                         options: {
                                     title:{
+                                        display: true,
                                         text:"segundo_modulo",
                                          position: 'top'
-                                    }
+                                    },
+                                    responsive:true
                                 }
                              
                         })

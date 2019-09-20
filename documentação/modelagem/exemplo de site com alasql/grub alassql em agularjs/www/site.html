@@ -68,10 +68,19 @@
                             <img src="https://img.icons8.com/material/24/000000/filled-trash.png" ng-click="remover_elemento()" ng-show="remover">
                             <input type="submit" class="salvar_datas" value="salvar"  ng-click="salvar_inicial_final(inicial,final)" />
                     </div>  
-                    
-                                <canvas ng-show="Pesquisar" id="myChart" width="1600" height="400"></canvas>
-                                <canvas  ng-show="Pesquisar"  id="myChart2" width="1600" height="200"></canvas>
-                                <canvas  ng-show="Pesquisar"  id="myChart3" width="1600" height="200"></canvas>
+                    <div class="chart-container" style=" position: relative; height:20vh; width:40vw">
+                        <canvas ng-show="Pesquisar" id="myChart"  ></canvas>
+                      
+                        
+                        </div>
+                        <div class="chart-container" style=" left: 50vh; bottom:20vh;  position: relative; height:20vh; width:40vw">
+                                <canvas  ng-show="Pesquisar"  id="myChart2"></canvas>
+                        </div>
+                        <div class="chart-container" style="left: 105vh; bottom:40vh; position: relative; height:20vh; width:40vw">
+                                <canvas  ng-show="Pesquisar"  id="myChart3"  ></canvas>
+                        </div>
+                               
+                             
 
                                 
 
