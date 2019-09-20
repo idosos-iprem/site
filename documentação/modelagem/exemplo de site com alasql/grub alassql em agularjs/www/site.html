@@ -28,8 +28,8 @@
         <a  ng-click="enable_lista()"  class="chamada">Chamada</a>
     
         <a  ng-click="enable_Pesquisar()" class="pesquisar" >Pesquisar aulas</a>
-        
-    </div>
+        <a ng-click="sair()" class="sair"> Sair</a>
+   </div>
     <div class="container">
             <div class="row">
                     <div class="col-sm-9" ng-show="lista"  >
@@ -68,21 +68,7 @@
                             <img src="https://img.icons8.com/material/24/000000/filled-trash.png" ng-click="remover_elemento()" ng-show="remover">
                             <input type="submit" class="salvar_datas" value="salvar"  ng-click="salvar_inicial_final(inicial,final)" />
                     </div>  
-                    <div class="chart-container" style=" position: relative; height:20vh; width:40vw">
-                        <canvas ng-show="Pesquisar" id="myChart"  ></canvas>
-                      
-                        
-                        </div>
-                        <div class="chart-container" style=" left: 50vh; bottom:20vh;  position: relative; height:20vh; width:40vw">
-                                <canvas  ng-show="Pesquisar"  id="myChart2"></canvas>
-                        </div>
-                        <div class="chart-container" style="left: 105vh; bottom:40vh; position: relative; height:20vh; width:40vw">
-                                <canvas  ng-show="Pesquisar"  id="myChart3"  ></canvas>
-                        </div>
-                               
-                             
-
-                                
+                          
 
                     <div class="col-sm-3" ng-show="date">
                             Escolher data: <input type="date" ng-model="data_informata" /></br>
@@ -96,7 +82,20 @@
                            
                             <input type="submit" value="salvar" class="deletar" ng-click="deletar(data_informata,numero,escolher_turma)" />
                     </div>
-                    
+                    <div class="chart-container" ng-show="canvas" style="left: -50vh; position: relative; height:20vh; width:40vw">
+                        <canvas ng-show="Pesquisar" id="myChart"  ></canvas>
+                      
+                        
+                </div>
+                        <div class="chart-container" ng-show="canvas" style=" left: 10vh; bottom:20vh;  position: relative; height:20vh; width:40vw">
+                                <canvas  ng-show="Pesquisar"  id="myChart2"></canvas>
+                        </div>
+                        <div class="chart-container" ng-show="canvas" style="left: 65vh; bottom:40vh; position: relative; height:20vh; width:40vw">
+                                <canvas  ng-show="Pesquisar"  id="myChart3"  ></canvas>
+                        </div>
+                               
+
+                          
 
             </div>
     </div>

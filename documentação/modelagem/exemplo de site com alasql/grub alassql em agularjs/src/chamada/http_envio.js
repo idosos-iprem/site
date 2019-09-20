@@ -207,9 +207,15 @@ post_dados(turma,string,dia){
                                         }) 
                                     this.enviar.delete();
                                 }
+                                else{
+                                    if(resp.data.aulas.length - 1 == c){
+                                        alert("Informe o id valido ou a data valida ou a turam correta");
+                                    }
+                                }
                                
                                 c++;
                             }
+                            
                            
                          
                     })

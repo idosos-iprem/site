@@ -7,6 +7,10 @@ app.config(function($httpProvider) {
     
   });
 app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia){
+    $scope.sair = function(){
+        var caminho = $window.location.href.replace("www/site.html","www/index.html");
+        $window.location.replace(caminho);
+    }
     $scope.insert = function(nome,chamada,modulo){
        
         servicos.adiconar(nome,chamada,modulo);
@@ -19,21 +23,24 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.lista = true;
         $scope.Adicionar = false;
         $scope.Pesquisar = false;
+        $scope.date = false;
+        $scope.canvas = false;
     }
     $scope.enable_adicionar = function(){
         $scope.lista = false;
         $scope.Adicionar = true;
         $scope.Pesquisar = false;
         $scope.date = false;
+        $scope.canvas = false;
     }
-    $scope.mostra_grafico = function(){
-      
-    }
+    $scope.date = false;
+    $scope.canvas = false;
     $scope.enable_Pesquisar = function(){
         $scope.lista = false;
         $scope.Adicionar = false;
         $scope.Pesquisar = true;
         $scope.date = false;
+        $scope.canvas = true;
         servicos.exiber_dados($scope.ip,"Primeiro_modulo_primeiro").then(r=>{
             var presente  = r.presente;
             var falta = r.falta;
@@ -52,14 +59,13 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                             window.chartColors.red
                         ],
                        }],
-                        labels:["presente","falta"]},
+                        labels:["presente:","falta:"]},
                 options: {
                             title:{
                                 display: true,
                                 text:"Primeiro_modulo_primeiro",
                                  position: 'top'
-                            },
-                            responsive:true
+                            }
                         }
                 })
             })
@@ -81,14 +87,13 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                                 window.chartColors.red
                             ],
                            }],
-                            labels:["presente","falta"]},
+                            labels:["presente:","falta:"]},
                     options: {
                                 title:{
                                     display: true,
                                     text:"Primeiro_modulo_segundo",
                                      position: 'top'
-                                },
-                                responsive:true
+                                }
                             }
                          
                     })
@@ -111,14 +116,13 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                                     window.chartColors.red
                                 ],
                                }],
-                                labels:["presente","falta"]},
+                                labels:["presente:","falta:"]},
                         options: {
                                     title:{
                                         display: true,
                                         text:"segundo_modulo",
                                          position: 'top'
-                                    },
-                                    responsive:true
+                                    }
                                 }
                              
                         })

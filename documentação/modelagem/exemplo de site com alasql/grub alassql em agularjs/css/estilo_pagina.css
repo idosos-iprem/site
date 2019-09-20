@@ -23,6 +23,11 @@
     padding: 2%;
 
 }
+.opções .sair{
+    padding: 3%;
+    cursor: pointer;
+    color: rgb(160, 206, 78);
+}
 .rodape{
     background-color: rgb(160, 206, 78);
     bottom: 0%;

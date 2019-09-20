@@ -124,11 +124,11 @@ class date_hora_inicial{
                   
                 res.data.aulas.forEach((value,index,array)=>{
                     if(value.chamada == "falta"){
-                        falta_exibir  = index +1;
+                        falta_exibir++;
                         
                     }
                     if(value.chamada == "presente"){
-                        presente_exibir = index +1;
+                        presente_exibir++;
                     }
                     if(array.length -1 == index){
                         var array = {
@@ -191,7 +191,7 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                                })
                                 
                             }
-                            else alert("adicione os dados dos idosos");
+                            else alert("adicione os dados das turmas");
                         })
                     })     
     }
