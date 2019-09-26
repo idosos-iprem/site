@@ -139,12 +139,30 @@ class date_hora_inicial{
                     }
                 })
                 
-                    });
+            });
 
         });
     }
-        
-
+    listar_pela_data(x,string,turma)
+    {
+        var classe = new this.http_alasql.classe();
+        var arrays = [];
+        return new Promise(resp=>{
+                    var urls =  string +"/"+ turma + ".json";
+                    classe.get(urls).then(response=>{
+                        response.data.aulas.forEach((value,index,array)=>{
+                            if(value.datatime == x && value.nome_turma == turma){
+                                arrays.push({nome:value.nome,
+                                chamada:value.chamada,
+                                turma:value.nome_turma});
+                            }
+                            else if(array.length -1 == index){
+                                resp(arrays);
+                            }
+                        });
+                    })
+                });
+    }
 }
 var servico = angular.module("servico",['enviar'])
 servico.factory("servicos",function($http,$resource,http_alasql){
@@ -194,6 +212,22 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                             else alert("adicione os dados das turmas");
                         })
                     })     
+    },
+    listar_data:function(x,string,turma){
+        var date = date_hora.tratar_data(x);
+        
+        var urls = "http:"+string + ":"+8080;
+        return new  Promise(p=>{
+            date_hora.verificar_se_dados(urls,turma).then(r=>{
+                if(r != "vazio")
+                {
+                    date_hora.listar_pela_data(date,urls,turma).then(ps=>{
+                        p(ps);
+                    });
+                }
+            });
+        });
     }
+    
 }
 })

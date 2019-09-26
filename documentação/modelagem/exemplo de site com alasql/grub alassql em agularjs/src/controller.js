@@ -41,6 +41,8 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.Pesquisar = true;
         $scope.date = false;
         $scope.canvas = true;
+        $scope.texto = true;
+
         servicos.exiber_dados($scope.ip,"Primeiro_modulo_primeiro").then(r=>{
             var presente  = r.presente;
             var falta = r.falta;
@@ -130,6 +132,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         }
 
     $scope.date = false;
+    $scope.texto = false;
     $scope.visualizar = function(){
         $scope.date = true;
         $scope.data_informata = null;
@@ -157,8 +160,14 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.numero = null;
         $scope.escolher_turma = null; 
     }
-    $scope.link_adicionar =true;
-    
+    $scope.link_adicionar = true;
+    $scope.listar_por_escolha =  function(){
+        var listar_por_escolha = [];
+        servicos.listar_data($scope.escolher_data,$scope.ip,$scope.turma_escolhida).then(resp=>{
+                listar_por_escolha.push(resp)
+                $scope.lista_itens = listar_por_escolha;
+        });
+    }
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
             try{
@@ -189,11 +198,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                 $window.localStorage.clear();
             }
         },50)
-       
-       
-       
     }
-
 });
 app.controller("portal",function($scope,dados,criptografia){
     $scope.disabled = false;

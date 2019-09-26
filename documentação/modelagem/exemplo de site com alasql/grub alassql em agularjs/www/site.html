@@ -46,17 +46,10 @@
                                                 <option value="Primeiro_modulo_primeiro" >Primeiro horario da primeira turma </option>
                                                 <option value="Primeiro_modulo_segundo">Segunda horario da primeira turma</option>
                                                 <option value="segundo_modulo">Primeiro horario da segunda turma</option>
-
                             </select>
                             <input type="submit" class="adicionar" value="Adicionar" ng-click="insert(nome,chamada,tipo_turma)" />
                             <input type="submit" class="deletar" value="deletar" ng-click="visualizar()"/>
-                                   
-                          
-                            
                     </div>
-                   
-                           
-                       
                     <div class="col-sm-9" ng-show="Adicionar" >
                             <label >Inicio:</label>
                             <input type="date" ng-model="inicial" />
@@ -82,10 +75,20 @@
                            
                             <input type="submit" value="salvar" class="deletar" ng-click="deletar(data_informata,numero,escolher_turma)" />
                     </div>
+                    <div  id="texto" ng-show="texto">
+                        Escolha a data: <input type="date" ng-model="escolher_data"/>
+                        <select ng-model="turma_escolhida" >
+                                        <option value="Primeiro_modulo_primeiro" >Primeiro horario da primeira turma </option>
+                                        <option value="Primeiro_modulo_segundo">Segunda horario da primeira turma</option>
+                                        <option value="segundo_modulo">Primeiro horario da segunda turma</option>
+                                   </select>
+                        <input type="button" ng-click="listar_por_escolha()" value="OK" />
+                        <div ng-repeat="value in lista_itens">
+                                {{value.nome}}
+                        </div>
+                    </div>
                     <div class="chart-container" ng-show="canvas" style="left: -50vh; position: relative; height:20vh; width:40vw">
                         <canvas ng-show="Pesquisar" id="myChart"  ></canvas>
-                      
-                        
                 </div>
                         <div class="chart-container" ng-show="canvas" style=" left: 10vh; bottom:20vh;  position: relative; height:20vh; width:40vw">
                                 <canvas  ng-show="Pesquisar"  id="myChart2"></canvas>
@@ -93,15 +96,10 @@
                         <div class="chart-container" ng-show="canvas" style="left: 65vh; bottom:40vh; position: relative; height:20vh; width:40vw">
                                 <canvas  ng-show="Pesquisar"  id="myChart3"  ></canvas>
                         </div>
-                               
-
-                          
-
             </div>
     </div>
     <footer class="rodape">
 
     </footer>
-   
 </body>
 </html>
