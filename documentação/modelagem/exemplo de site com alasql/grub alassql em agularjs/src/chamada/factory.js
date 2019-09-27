@@ -152,9 +152,9 @@ class date_hora_inicial{
                     classe.get(urls).then(response=>{
                         response.data.aulas.forEach((value,index,array)=>{
                             if(value.datatime == x && value.nome_turma == turma){
+
                                 arrays.push({nome:value.nome,
-                                chamada:value.chamada,
-                                turma:value.nome_turma});
+                                chamada:value.chamada});
                             }
                             else if(array.length -1 == index){
                                 resp(arrays);
@@ -206,6 +206,7 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                             {
                                date_hora.grafico_pizza(urls,turma).then(s=>{
                                 p(s);
+                                
                                })
                                 
                             }
@@ -217,16 +218,28 @@ servico.factory("servicos",function($http,$resource,http_alasql){
         var date = date_hora.tratar_data(x);
         
         var urls = "http:"+string + ":"+8080;
-        return new  Promise(p=>{
+        
             date_hora.verificar_se_dados(urls,turma).then(r=>{
                 if(r != "vazio")
                 {
                     date_hora.listar_pela_data(date,urls,turma).then(ps=>{
-                        p(ps);
+                        var id = document.getElementById("table");
+                        var table = document.createElement("table");
+                        var coluna = document.createElement("tr");
+                        
+                        coluna.className = "Alunos";
+                        for(var i = 0;i<ps.length;i++){
+                           
+                            var linha = document.createElement("th");
+                            linha.innerText =" index: "+ i+ "\n" + " Nome:"+" "+ps[i].nome +"\n"+ " "+"Chamada: " + 
+                            ps[i].chamada +"\n"+ " " + "Turma: "+turma + "    ";
+                            coluna.append(linha);
+                        }
+                        table.append(coluna);
+                        id.append(table);
                     });
                 }
             });
-        });
     }
     
 }

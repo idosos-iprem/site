@@ -82,10 +82,8 @@
                                         <option value="Primeiro_modulo_segundo">Segunda horario da primeira turma</option>
                                         <option value="segundo_modulo">Primeiro horario da segunda turma</option>
                                    </select>
-                        <input type="button" ng-click="listar_por_escolha()" value="OK" />
-                        <div ng-repeat="value in lista_itens">
-                                {{value.nome}}
-                        </div>
+                        <input type="button" ng-click="listar_por_escolha()" value="OK" /> </br>
+                        <div id="table"></div>
                     </div>
                     <div class="chart-container" ng-show="canvas" style="left: -50vh; position: relative; height:20vh; width:40vw">
                         <canvas ng-show="Pesquisar" id="myChart"  ></canvas>

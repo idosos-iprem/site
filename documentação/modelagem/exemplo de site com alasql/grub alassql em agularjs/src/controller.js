@@ -163,10 +163,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
     $scope.link_adicionar = true;
     $scope.listar_por_escolha =  function(){
         var listar_por_escolha = [];
-        servicos.listar_data($scope.escolher_data,$scope.ip,$scope.turma_escolhida).then(resp=>{
-                listar_por_escolha.push(resp)
-                $scope.lista_itens = listar_por_escolha;
-        });
+        servicos.listar_data($scope.escolher_data,$scope.ip,$scope.turma_escolhida);
     }
     $scope.dados_recebidos = function(){
         $timeout(resp=>{
