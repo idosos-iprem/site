@@ -154,9 +154,12 @@ class date_hora_inicial{
                             if(value.datatime == x && value.nome_turma == turma){
 
                                 arrays.push({nome:value.nome,
-                                chamada:value.chamada});
+                                chamada:value.chamada,
+                            data:value.datatime,
+                        turma:value.nome_turma});
                             }
-                            else if(array.length -1 == index){
+                            if(array.length -1 == index)
+                            {
                                 resp(arrays);
                             }
                         });
@@ -226,8 +229,8 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                         var id = document.getElementById("table");
                         var table = document.createElement("table");
                         var coluna = document.createElement("tr");
-                        
-                        coluna.className = "Alunos";
+
+                      
                        var p = 0;
                        var f = 0;
                         for(var i = 0;i<ps.length;i++){
@@ -242,15 +245,36 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                             
                          
                         }
-                        coluna.textContent = "Quantidade de Presente:"+ p + " " + " Quantidade de Falta:" + f; 
-                        for(var u =0;u<ps.length;u++){
-                            var linha = document.createElement("th");
-                            linha.innerText = "\n" + " Nome:"+" "+ps[u].nome +"\n"+ " "+"Chamada: " + 
-                            ps[u].chamada +"\n"+ " " + "Turma: "+turma + "    ";
-                            coluna.append(linha);
-                        }
-                        table.append(coluna);
-                        id.append(table);
+                            
+                            var label_remover =  document.getElementsByClassName("Alunos");
+                            var numero = label_remover.length;
+                            if(numero >=1 && date == ps[0].data && turma == ps[0].turma)
+                            {
+                                for(var i = 0;i<numero;i++){
+                                    label_remover.item(i).remove();
+                                }
+                                coluna.className = "Alunos";
+                                coluna.textContent = "Quantidade de Presente:"+ p + " " + " Quantidade de Falta:" + f;
+                                for(var u =0;u<ps.length;u++){
+                                    var linha = document.createElement("th");
+                                    linha.innerText = "\nNome:"+" "+ps[u].nome+ "\nChamada:"+" "+ps[u].chamada +" ";
+                                    coluna.append(linha);
+                                }
+                                table.append(coluna);
+                                id.append(table);
+                            }
+                            else{
+                                coluna.className = "Alunos";
+                                coluna.textContent = "Quantidade de Presente:"+ p + " " + " Quantidade de Falta:" + f;
+                                for(var u =0;u<ps.length;u++){
+                                    var linha = document.createElement("th");
+                                    linha.innerText =  "\nNome:"+" "+ps[u].nome+ "\nChamada:"+" "+ps[u].chamada +" ";
+                                    coluna.append(linha);
+                                }
+                                table.append(coluna);
+                                id.append(table);
+                            }
+
                     });
                 }
             });

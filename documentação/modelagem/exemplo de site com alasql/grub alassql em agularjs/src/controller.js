@@ -133,12 +133,10 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                              
                         })
                     })
-                    delete $scope.escolher_data;
-                    delete $scope.turma_escolhida;
+
         }
 
     $scope.date = false;
-    $scope.texto = false;
     $scope.visualizar = function(){
         $scope.date = true;
         $scope.data_informata = null;
@@ -168,7 +166,6 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
     }
     $scope.link_adicionar = true;
     $scope.listar_por_escolha =  function(){
-        var listar_por_escolha = [];
         servicos.listar_data($scope.escolher_data,$scope.ip,$scope.turma_escolhida);
     }
     $scope.dados_recebidos = function(){

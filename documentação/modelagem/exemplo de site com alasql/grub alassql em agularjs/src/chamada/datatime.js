@@ -8,6 +8,10 @@ class date{
                 var x = new Date(resp.data.datetime);
                 var formato = x.getUTCDate().toString() + "/" +(x.getMonth()+1).toString().padStart(2, '0') + "/" + x.getFullYear().toString();
                 Response(formato);
+            },error=>{
+                var x = new Date();
+                var formato = x.getUTCDate().toString() + "/" +(x.getMonth()+1).toString().padStart(2, '0') + "/" + x.getFullYear().toString();
+                Response(formato);
             })
         });
        
