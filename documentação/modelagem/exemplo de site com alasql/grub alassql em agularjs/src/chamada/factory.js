@@ -228,11 +228,25 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                         var coluna = document.createElement("tr");
                         
                         coluna.className = "Alunos";
+                       var p = 0;
+                       var f = 0;
                         for(var i = 0;i<ps.length;i++){
-                           
+                            switch(ps[i].chamada){
+                                case "presente":
+                                        p++;
+                                continue;
+                                case "falta":
+                                        f++;
+                                continue;
+                            }
+                            
+                         
+                        }
+                        coluna.textContent = "Quantidade de Presente:"+ p + " " + " Quantidade de Falta:" + f; 
+                        for(var u =0;u<ps.length;u++){
                             var linha = document.createElement("th");
-                            linha.innerText =" index: "+ i+ "\n" + " Nome:"+" "+ps[i].nome +"\n"+ " "+"Chamada: " + 
-                            ps[i].chamada +"\n"+ " " + "Turma: "+turma + "    ";
+                            linha.innerText = "\n" + " Nome:"+" "+ps[u].nome +"\n"+ " "+"Chamada: " + 
+                            ps[u].chamada +"\n"+ " " + "Turma: "+turma + "    ";
                             coluna.append(linha);
                         }
                         table.append(coluna);

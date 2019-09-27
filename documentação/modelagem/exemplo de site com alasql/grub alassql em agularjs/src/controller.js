@@ -18,6 +18,7 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.nome = null;
         $scope.chamada = null;
         $scope.tipo_turma = null;
+        
     }
     $scope.enable_lista = function(){
         $scope.lista = true;
@@ -25,6 +26,8 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.Pesquisar = false;
         $scope.date = false;
         $scope.canvas = false;
+        $scope.texto = false;
+
     }
     $scope.enable_adicionar = function(){
         $scope.lista = false;
@@ -32,6 +35,8 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.Pesquisar = false;
         $scope.date = false;
         $scope.canvas = false;
+        $scope.texto = false;
+        
     }
     $scope.date = false;
     $scope.canvas = false;
@@ -42,7 +47,6 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
         $scope.date = false;
         $scope.canvas = true;
         $scope.texto = true;
-
         servicos.exiber_dados($scope.ip,"Primeiro_modulo_primeiro").then(r=>{
             var presente  = r.presente;
             var falta = r.falta;
@@ -129,6 +133,8 @@ app.controller("site",function($scope,servicos,http_alasql,$window,$timeout,dia)
                              
                         })
                     })
+                    delete $scope.escolher_data;
+                    delete $scope.turma_escolhida;
         }
 
     $scope.date = false;
