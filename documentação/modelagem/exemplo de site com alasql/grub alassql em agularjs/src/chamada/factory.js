@@ -229,8 +229,7 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                         var id = document.getElementById("table");
                         var table = document.createElement("table");
                         var coluna = document.createElement("tr");
-
-                      
+                        
                        var p = 0;
                        var f = 0;
                         for(var i = 0;i<ps.length;i++){
@@ -245,30 +244,43 @@ servico.factory("servicos",function($http,$resource,http_alasql){
                             
                          
                         }
-                            
-                            var label_remover =  document.getElementsByClassName("Alunos");
-                            var numero = label_remover.length;
+                       
+                        var label_remover =  document.getElementsByClassName("Alunos");
+                        var numero = label_remover.length;
+                        table.className = "tabela";
                             if(numero >=1 && date == ps[0].data && turma == ps[0].turma)
                             {
+                                
+                               
                                 for(var i = 0;i<numero;i++){
                                     label_remover.item(i).remove();
+                                    
                                 }
+                              var tabela = document.getElementsByClassName("tabela");
+                              var numero2 = tabela.length;
+                              for(var i = 0;i<numero2;i++){
+                                tabela.item(i).remove();
+                            }
                                 coluna.className = "Alunos";
                                 coluna.textContent = "Quantidade de Presente:"+ p + " " + " Quantidade de Falta:" + f;
                                 for(var u =0;u<ps.length;u++){
                                     var linha = document.createElement("th");
-                                    linha.innerText = "\nNome:"+" "+ps[u].nome+ "\nChamada:"+" "+ps[u].chamada +" ";
+                                    linha.innerText = "\nNome:"+" "+ps[u].nome+" "+"\nChamada:"+" "+ps[u].chamada;
+                                    linha.className = "linha";
                                     coluna.append(linha);
                                 }
                                 table.append(coluna);
                                 id.append(table);
+
                             }
                             else{
+                               
                                 coluna.className = "Alunos";
                                 coluna.textContent = "Quantidade de Presente:"+ p + " " + " Quantidade de Falta:" + f;
                                 for(var u =0;u<ps.length;u++){
                                     var linha = document.createElement("th");
-                                    linha.innerText =  "\nNome:"+" "+ps[u].nome+ "\nChamada:"+" "+ps[u].chamada +" ";
+                                     linha.innerText = "\nNome:"+" "+ps[u].nome+" "+"\nChamada:"+" "+ps[u].chamada;
+                                     linha.className = "linha";
                                     coluna.append(linha);
                                 }
                                 table.append(coluna);
